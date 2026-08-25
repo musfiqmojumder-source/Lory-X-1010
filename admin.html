@@ -146,6 +146,36 @@
 
 
         /* =====================================
+           EDIT MODE
+        ===================================== */
+
+        .edit-mode {
+            border: 2px solid #111;
+        }
+
+        .edit-notice {
+            display: none;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .cancel-edit-button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            border: 1px solid #111;
+            background: #fff;
+            color: #111;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+
+        /* =====================================
            IMAGE UPLOAD
         ===================================== */
 
@@ -178,6 +208,13 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .current-image-text {
+            display: none;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
         }
 
 
@@ -299,6 +336,11 @@
             color: #fff;
         }
 
+        .edit-button {
+            background: #fff;
+            color: #111;
+        }
+
         .delete-button {
             border-color: #b00000;
             color: #b00000;
@@ -345,10 +387,12 @@
             .product-actions {
                 grid-column: 1 / -1;
                 flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .action-button {
                 flex: 1;
+                min-width: 100px;
             }
 
             .manage-header {
@@ -496,12 +540,23 @@
 
 
 <!-- =========================================
-     ADD PRODUCT
+     ADD / EDIT PRODUCT FORM
 ========================================= -->
 
-<div class="product-form">
+<div
+    id="productForm"
+    class="product-form"
+>
 
-    <h2>
+    <div
+        id="editNotice"
+        class="edit-notice"
+    >
+        ✏️ Editing Product
+    </div>
+
+
+    <h2 id="formTitle">
         Add Product
     </h2>
 
@@ -519,6 +574,7 @@
         id="productPrice"
         class="admin-input"
         placeholder="Price"
+        min="0"
     >
 
 
@@ -528,7 +584,6 @@
         class="admin-input"
         placeholder="Category e.g. Fashion"
     >
-
 
 
     <!-- IMAGE -->
@@ -549,6 +604,14 @@
 
 
     <div
+        id="currentImageText"
+        class="current-image-text"
+    >
+        Current product image:
+    </div>
+
+
+    <div
         id="imagePreview"
         class="image-preview"
     >
@@ -560,7 +623,6 @@
         >
 
     </div>
-
 
 
     <input
@@ -604,6 +666,15 @@
     </button>
 
 
+    <button
+        id="cancelEditBtn"
+        class="cancel-edit-button"
+        style="display:none;"
+    >
+        Cancel Edit
+    </button>
+
+
     <p
         id="productMessage"
         class="message"
@@ -629,7 +700,7 @@
             </h2>
 
             <p>
-                View, publish, hide or delete products.
+                View, edit, publish, hide or delete products.
             </p>
 
         </div>
@@ -695,7 +766,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-
 <script>
 
 /* =========================================
@@ -703,11 +773,11 @@
 ========================================= */
 
 const SUPABASE_URL =
-    "https://hmvzqwatmsctlvzylmys.supabase.co";
+    "YOUR_SUPABASE_PROJECT_URL";
 
 
 const SUPABASE_KEY =
-    "sb_publishable_BJXkMjk7jvgYKXgiYMbvUw_6S17oAAY";
+    "YOUR_SUPABASE_PUBLISHABLE_KEY";
 
 
 const supabaseClient =
@@ -717,6 +787,14 @@ const supabaseClient =
     );
 
 
+/* =========================================
+   STATE
+========================================= */
+
+let editingProductId = null;
+
+let editingOldImageUrl = null;
+
 
 /* =========================================
    ELEMENTS
@@ -725,48 +803,67 @@ const supabaseClient =
 const loginBox =
     document.getElementById("loginBox");
 
-
 const dashboard =
     document.getElementById("dashboard");
-
 
 const loginBtn =
     document.getElementById("loginBtn");
 
-
 const logoutBtn =
     document.getElementById("logoutBtn");
-
 
 const loginMessage =
     document.getElementById("loginMessage");
 
-
 const productMessage =
     document.getElementById("productMessage");
-
 
 const productImage =
     document.getElementById("productImage");
 
-
 const imagePreview =
     document.getElementById("imagePreview");
-
 
 const previewImg =
     document.getElementById("previewImg");
 
+const currentImageText =
+    document.getElementById("currentImageText");
 
 const adminProductList =
-    document.getElementById("adminProductList");
-
+    document.getElementById(
+        "adminProductList"
+    );
 
 const refreshProductsBtn =
     document.getElementById(
         "refreshProductsBtn"
     );
 
+const productForm =
+    document.getElementById(
+        "productForm"
+    );
+
+const formTitle =
+    document.getElementById(
+        "formTitle"
+    );
+
+const editNotice =
+    document.getElementById(
+        "editNotice"
+    );
+
+const addProductBtn =
+    document.getElementById(
+        "addProductBtn"
+    );
+
+const cancelEditBtn =
+    document.getElementById(
+        "cancelEditBtn"
+    );
 
 
 /* =========================================
@@ -783,8 +880,30 @@ productImage.addEventListener(
 
         if (!file) {
 
-            imagePreview.style.display =
-                "none";
+            return;
+        }
+
+
+        if (!file.type.startsWith("image/")) {
+
+            productMessage.textContent =
+                "Please select an image file.";
+
+            this.value = "";
+
+            return;
+        }
+
+
+        if (
+            file.size >
+            5 * 1024 * 1024
+        ) {
+
+            productMessage.textContent =
+                "Image must be less than 5 MB.";
+
+            this.value = "";
 
             return;
         }
@@ -797,9 +916,12 @@ productImage.addEventListener(
         imagePreview.style.display =
             "block";
 
+
+        productMessage.textContent =
+            "";
+
     }
 );
-
 
 
 /* =========================================
@@ -822,7 +944,6 @@ async function checkUser() {
         dashboard.style.display =
             "block";
 
-
         loadAdminProducts();
 
     } else {
@@ -836,7 +957,6 @@ async function checkUser() {
     }
 
 }
-
 
 
 /* =========================================
@@ -905,7 +1025,6 @@ loginBtn.addEventListener(
 );
 
 
-
 /* =========================================
    LOGOUT
 ========================================= */
@@ -916,23 +1035,21 @@ logoutBtn.addEventListener(
 
         await supabaseClient.auth.signOut();
 
+        resetEditMode();
+
         checkUser();
 
     }
 );
 
 
-
 /* =========================================
-   ADD PRODUCT
+   ADD / UPDATE PRODUCT
 ========================================= */
 
-document
-    .getElementById("addProductBtn")
-    .addEventListener(
-        "click",
-        async () => {
-
+addProductBtn.addEventListener(
+    "click",
+    async () => {
 
         const name =
             document
@@ -981,141 +1098,4 @@ document
         const description =
             document
                 .getElementById("productDescription")
-                .value
-                .trim();
-
-
-        const file =
-            productImage.files[0];
-
-
-        /* VALIDATION */
-
-        if (!name || !price) {
-
-            productMessage.textContent =
-                "Product name and price are required.";
-
-            return;
-        }
-
-
-        if (!file) {
-
-            productMessage.textContent =
-                "Please choose a product image.";
-
-            return;
-        }
-
-
-        if (!file.type.startsWith("image/")) {
-
-            productMessage.textContent =
-                "Please select an image file.";
-
-            return;
-        }
-
-
-        if (
-            file.size >
-            5 * 1024 * 1024
-        ) {
-
-            productMessage.textContent =
-                "Image must be less than 5 MB.";
-
-            return;
-        }
-
-
-        productMessage.textContent =
-            "Uploading image...";
-
-
-        /* FILE NAME */
-
-        const fileExtension =
-            file.name
-                .split(".")
-                .pop();
-
-
-        const fileName =
-            `${Date.now()}-${crypto.randomUUID()}.${fileExtension}`;
-
-
-        /* UPLOAD IMAGE */
-
-        const {
-            error: uploadError
-        } =
-            await supabaseClient
-                .storage
-                .from("product-images")
-                .upload(
-                    fileName,
-                    file
-                );
-
-
-        if (uploadError) {
-
-            productMessage.textContent =
-                "Image upload failed: " +
-                uploadError.message;
-
-            return;
-        }
-
-
-        /* PUBLIC URL */
-
-        const {
-            data: publicUrlData
-        } =
-            supabaseClient
-                .storage
-                .from("product-images")
-                .getPublicUrl(
-                    fileName
-                );
-
-
-        const image_url =
-            publicUrlData.publicUrl;
-
-
-        /* SAVE PRODUCT */
-
-        productMessage.textContent =
-            "Saving product...";
-
-
-        const {
-            error: productError
-        } =
-            await supabaseClient
-                .from("products")
-                .insert([{
-
-                    name: name,
-
-                    price: price,
-
-                    description: description,
-
-                    image_url: image_url,
-
-                    category: category,
-
-                    sizes: sizes,
-
-                    colors: colors,
-
-                    stock: stock,
-
-                    is_published: true
-
-                }])
+        
