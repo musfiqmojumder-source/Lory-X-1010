@@ -9,32 +9,39 @@ const products = [
         name: "Premium Casual Shirt",
         category: "Fashion",
         price: "৳899",
-        image: "https://via.placeholder.com/600x600?text=Product+1",
-        link: "#"
+        image: "https://placehold.co/800x800?text=Product+1",
+        description: "Premium quality casual shirt for everyday use.",
+        shopBaseLink: "#"
     },
+
     {
         id: 2,
         name: "Classic Polo T-Shirt",
         category: "Fashion",
         price: "৳699",
-        image: "https://via.placeholder.com/600x600?text=Product+2",
-        link: "#"
+        image: "https://placehold.co/800x800?text=Product+2",
+        description: "Comfortable and stylish polo t-shirt.",
+        shopBaseLink: "#"
     },
+
     {
         id: 3,
         name: "Smart Wireless Gadget",
         category: "Gadgets",
         price: "৳1,299",
-        image: "https://via.placeholder.com/600x600?text=Product+3",
-        link: "#"
+        image: "https://placehold.co/800x800?text=Product+3",
+        description: "A useful wireless gadget for everyday life.",
+        shopBaseLink: "#"
     },
+
     {
         id: 4,
         name: "Modern Home Item",
         category: "Home",
         price: "৳599",
-        image: "https://via.placeholder.com/600x600?text=Product+4",
-        link: "#"
+        image: "https://placehold.co/800x800?text=Product+4",
+        description: "A practical and modern product for your home.",
+        shopBaseLink: "#"
     }
 ];
 
@@ -48,7 +55,7 @@ function createProductCard(product) {
     return `
         <article class="product-card">
 
-            <a href="${product.link}">
+            <a href="product.html?id=${product.id}">
 
                 <div class="product-image">
 
@@ -77,7 +84,7 @@ function createProductCard(product) {
                 </div>
 
                 <a
-                    href="${product.link}"
+                    href="product.html?id=${product.id}"
                     class="product-button"
                 >
                     View Product
@@ -91,16 +98,18 @@ function createProductCard(product) {
 
 
 /* =========================================
-   SHOW PRODUCTS
+   DISPLAY PRODUCTS
 ========================================= */
 
 function displayProducts(productList, containerId) {
 
-    const container = document.getElementById(containerId);
+    const container =
+        document.getElementById(containerId);
 
     if (!container) return;
 
-    const noProducts = document.getElementById("no-products");
+    const noProducts =
+        document.getElementById("no-products");
 
     if (productList.length === 0) {
 
@@ -150,7 +159,7 @@ function loadAllProducts() {
 
 
 /* =========================================
-   SEARCH + FILTER
+   SEARCH + CATEGORY FILTER
 ========================================= */
 
 function setupProductFilters() {
@@ -174,18 +183,25 @@ function setupProductFilters() {
                 ? searchInput.value.toLowerCase().trim()
                 : "";
 
-        const filteredProducts = products.filter(product => {
+        const filteredProducts =
+            products.filter(product => {
 
-            const matchesCategory =
-                currentCategory === "all" ||
-                product.category === currentCategory;
+                const matchesCategory =
+                    currentCategory === "all" ||
+                    product.category === currentCategory;
 
-            const matchesSearch =
-                product.name.toLowerCase().includes(searchText) ||
-                product.category.toLowerCase().includes(searchText);
+                const matchesSearch =
+                    product.name
+                        .toLowerCase()
+                        .includes(searchText) ||
 
-            return matchesCategory && matchesSearch;
-        });
+                    product.category
+                        .toLowerCase()
+                        .includes(searchText);
+
+                return matchesCategory &&
+                       matchesSearch;
+            });
 
         displayProducts(
             filteredProducts,
@@ -193,8 +209,6 @@ function setupProductFilters() {
         );
     }
 
-
-    /* Search */
 
     if (searchInput) {
 
@@ -205,8 +219,6 @@ function setupProductFilters() {
 
     }
 
-
-    /* Category buttons */
 
     filterButtons.forEach(button => {
 
@@ -235,15 +247,118 @@ function setupProductFilters() {
 
 
 /* =========================================
-   START
+   PRODUCT DETAILS
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+function loadProductDetails() {
 
-    loadFeaturedProducts();
+    const container =
+        document.getElementById("product-detail");
 
-    loadAllProducts();
+    if (!container) return;
 
-    setupProductFilters();
+    const params =
+        new URLSearchParams(window.location.search);
 
-});
+    const productId =
+        Number(params.get("id"));
+
+    const product =
+        products.find(item => item.id === productId);
+
+    if (!product) {
+
+        container.innerHTML = `
+            <div style="
+                grid-column: 1 / -1;
+                text-align: center;
+                padding: 60px 20px;
+            ">
+
+                <h2>Product Not Found</h2>
+
+                <p style="margin: 15px 0 25px;">
+                    Sorry, this product is not available.
+                </p>
+
+                <a
+                    href="products.html"
+                    class="primary-btn"
+                >
+                    Back to Products
+                </a>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    document.title =
+        `${product.name} | Lory X 1010`;
+
+
+    container.innerHTML = `
+
+        <div class="detail-image">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}"
+            >
+
+        </div>
+
+
+        <div>
+
+            <div class="detail-category">
+                ${product.category}
+            </div>
+
+            <h1 class="detail-title">
+                ${product.name}
+            </h1>
+
+            <div class="detail-price">
+                ${product.price}
+            </div>
+
+            <p class="detail-description">
+                ${product.description}
+            </p>
+
+            <a
+                href="${product.shopBaseLink}"
+                class="buy-button"
+                target="_blank"
+                rel="noopener"
+            >
+                Buy Now
+            </a>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================
+   START WEBSITE
+========================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadFeaturedProducts();
+
+        loadAllProducts();
+
+        setupProductFilters();
+
+        loadProductDetails();
+
+    }
+);
