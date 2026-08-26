@@ -14,19 +14,19 @@
 
     <style>
 
-        .admin-section {
-            padding: 60px 0;
-            min-height: 70vh;
+        * {
+            box-sizing: border-box;
         }
 
-        .admin-box,
-        .dashboard {
-            max-width: 1000px;
-            margin: auto;
+        .admin-section {
+            padding: 50px 0;
+            min-height: 75vh;
         }
 
         .admin-box {
-            max-width: 500px;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
             padding: 30px;
             border: 1px solid #ddd;
             border-radius: 12px;
@@ -44,7 +44,6 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             font-size: 16px;
-            box-sizing: border-box;
             background: #fff;
             color: #111;
         }
@@ -71,69 +70,60 @@
             cursor: not-allowed;
         }
 
-        .logout-button {
-            padding: 10px 18px;
-            background: #111;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
         .message {
             margin-top: 15px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #b00000;
+        }
+
+        .success {
+            color: #187a18;
         }
 
         .dashboard {
             display: none;
+            max-width: 1000px;
+            margin: auto;
         }
 
         .dashboard-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 35px;
             gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .logout-button,
+        .refresh-button {
+            padding: 10px 18px;
+            border: 1px solid #111;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            background: #fff;
+            color: #111;
+        }
+
+        .logout-button {
+            background: #111;
+            color: #fff;
         }
 
         .product-form {
             padding: 25px;
             border: 1px solid #ddd;
             border-radius: 12px;
-            margin-bottom: 50px;
             background: #fff;
+            margin-bottom: 45px;
         }
 
         .product-form h2 {
             margin-bottom: 20px;
-        }
-
-        .edit-mode {
-            border: 2px solid #111;
-        }
-
-        .edit-notice {
-            display: none;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            background: #f5f5f5;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-
-        .cancel-edit-button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-            border: 1px solid #111;
-            background: #fff;
-            color: #111;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 700;
         }
 
         .file-label {
@@ -152,13 +142,13 @@
         }
 
         .image-preview {
+            display: none;
             width: 180px;
             height: 180px;
             margin: 10px 0 20px;
             border-radius: 10px;
             overflow: hidden;
             background: #f5f5f5;
-            display: none;
         }
 
         .image-preview img {
@@ -167,15 +157,16 @@
             object-fit: cover;
         }
 
-        .current-image-text {
+        .cancel-button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            border: 1px solid #111;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            font-weight: 700;
             display: none;
-            margin-bottom: 10px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .manage-section {
-            margin-top: 40px;
         }
 
         .manage-header {
@@ -186,17 +177,7 @@
             margin-bottom: 20px;
         }
 
-        .refresh-button {
-            padding: 10px 16px;
-            border: 1px solid #111;
-            background: #fff;
-            color: #111;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .admin-product-list {
+        .product-list {
             display: grid;
             gap: 15px;
         }
@@ -227,8 +208,7 @@
         }
 
         .admin-product-info h3 {
-            margin-bottom: 6px;
-            font-size: 18px;
+            margin-bottom: 7px;
         }
 
         .admin-product-info p {
@@ -237,56 +217,54 @@
             font-size: 14px;
         }
 
-        .product-status {
+        .status {
             display: inline-block;
-            margin-top: 8px;
             padding: 5px 9px;
+            margin-top: 7px;
             border-radius: 5px;
             font-size: 12px;
             font-weight: 700;
         }
 
-        .status-published {
+        .published {
             background: #e8f7e8;
             color: #187a18;
         }
 
-        .status-hidden {
+        .hidden {
             background: #f5eaea;
             color: #a00000;
         }
 
-        .product-actions {
+        .actions {
             display: flex;
             flex-direction: column;
             gap: 8px;
             min-width: 130px;
         }
 
-        .action-button {
+        .action {
             padding: 9px 12px;
             border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
             border: 1px solid #111;
             background: #fff;
             color: #111;
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        .publish-button {
-            background: #111;
-            color: #fff;
+        .action:hover {
+            opacity: .85;
         }
 
-        .delete-button {
-            border-color: #b00000;
+        .delete {
             color: #b00000;
-            background: #fff;
+            border-color: #b00000;
         }
 
-        .empty-products {
-            text-align: center;
+        .empty {
             padding: 50px 20px;
+            text-align: center;
             border: 1px dashed #ccc;
             border-radius: 10px;
             color: #666;
@@ -295,7 +273,11 @@
         @media (max-width: 700px) {
 
             .admin-section {
-                padding: 40px 0;
+                padding: 35px 0;
+            }
+
+            .dashboard-header {
+                align-items: flex-start;
             }
 
             .admin-product {
@@ -307,13 +289,13 @@
                 height: 80px;
             }
 
-            .product-actions {
+            .actions {
                 grid-column: 1 / -1;
                 flex-direction: row;
                 flex-wrap: wrap;
             }
 
-            .action-button {
+            .action {
                 flex: 1;
                 min-width: 100px;
             }
@@ -338,9 +320,13 @@
 
         <nav class="nav">
 
-            <a href="index.html">Home</a>
+            <a href="index.html">
+                Home
+            </a>
 
-            <a href="products.html">Products</a>
+            <a href="products.html">
+                Products
+            </a>
 
         </nav>
 
@@ -356,7 +342,9 @@
 <div class="container">
 
 
-<!-- LOGIN -->
+<!-- =========================================
+     LOGIN
+========================================= -->
 
 <div id="loginBox" class="admin-box">
 
@@ -381,21 +369,24 @@
     <button
         id="loginBtn"
         class="admin-button"
+        type="button"
     >
         Login
     </button>
 
-    <p
-        id="loginMessage"
-        class="message"
-    ></p>
+    <p id="loginMessage"
+       class="message">
+    </p>
 
 </div>
 
 
-<!-- DASHBOARD -->
+<!-- =========================================
+     DASHBOARD
+========================================= -->
 
-<div id="dashboard" class="dashboard">
+<div id="dashboard"
+     class="dashboard">
 
 
     <div class="dashboard-header">
@@ -404,13 +395,16 @@
 
             <h1>Admin Dashboard</h1>
 
-            <p>Lory X 1010</p>
+            <p>
+                Lory X 1010
+            </p>
 
         </div>
 
         <button
             id="logoutBtn"
             class="logout-button"
+            type="button"
         >
             Logout
         </button>
@@ -418,19 +412,11 @@
     </div>
 
 
-    <!-- PRODUCT FORM -->
+    <!-- =====================================
+         ADD PRODUCT
+    ====================================== -->
 
-    <div
-        id="productForm"
-        class="product-form"
-    >
-
-        <div
-            id="editNotice"
-            class="edit-notice"
-        >
-            ✏️ Editing Product
-        </div>
+    <div class="product-form">
 
         <h2 id="formTitle">
             Add Product
@@ -478,23 +464,13 @@
         >
 
 
-        <div
-            id="currentImageText"
-            class="current-image-text"
-        >
-            Current product image
-        </div>
-
-
-        <div
-            id="imagePreview"
-            class="image-preview"
-        >
+        <div id="imagePreview"
+             class="image-preview">
 
             <img
                 id="previewImg"
                 src=""
-                alt="Preview"
+                alt="Product Preview"
             >
 
         </div>
@@ -534,8 +510,9 @@
 
 
         <button
-            id="addProductBtn"
+            id="saveProductBtn"
             class="admin-button"
+            type="button"
         >
             Add Product
         </button>
@@ -543,8 +520,8 @@
 
         <button
             id="cancelEditBtn"
-            class="cancel-edit-button"
-            style="display:none;"
+            class="cancel-button"
+            type="button"
         >
             Cancel Edit
         </button>
@@ -558,25 +535,30 @@
     </div>
 
 
-    <!-- MANAGE PRODUCTS -->
+    <!-- =====================================
+         MANAGE PRODUCTS
+    ====================================== -->
 
-    <div class="manage-section">
+    <div>
 
         <div class="manage-header">
 
             <div>
 
-                <h2>Manage Products</h2>
+                <h2>
+                    Manage Products
+                </h2>
 
                 <p>
-                    View, edit, publish, hide or delete products.
+                    Edit, publish, hide or delete products.
                 </p>
 
             </div>
 
             <button
-                id="refreshProductsBtn"
+                id="refreshBtn"
                 class="refresh-button"
+                type="button"
             >
                 🔄 Refresh
             </button>
@@ -585,11 +567,11 @@
 
 
         <div
-            id="adminProductList"
-            class="admin-product-list"
+            id="productList"
+            class="product-list"
         >
 
-            <div class="empty-products">
+            <div class="empty">
                 Loading products...
             </div>
 
@@ -620,16 +602,18 @@
 </footer>
 
 
-<!-- SUPABASE -->
+<!-- =========================================
+     SUPABASE
+========================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-/* =========================================
-   SUPABASE CONFIG
-========================================= */
+/* =====================================================
+   SUPABASE CONFIGURATION
+===================================================== */
 
 const SUPABASE_URL =
     "https://hmvzqwatmsctlvzylmys.supabase.co";
@@ -645,18 +629,32 @@ const supabaseClient =
     );
 
 
-/* =========================================
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+/*
+   IMPORTANT:
+   এই নামটি তোমার Supabase Storage bucket-এর নামের
+   সাথে EXACTLY একই হতে হবে।
+*/
+
+const STORAGE_BUCKET =
+    "products";
+
+
+/* =====================================================
    STATE
-========================================= */
+===================================================== */
 
 let editingProductId = null;
 
-let editingOldImageUrl = null;
+let oldImageUrl = null;
 
 
-/* =========================================
+/* =====================================================
    ELEMENTS
-========================================= */
+===================================================== */
 
 const loginBox =
     document.getElementById("loginBox");
@@ -664,20 +662,53 @@ const loginBox =
 const dashboard =
     document.getElementById("dashboard");
 
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
 const loginBtn =
     document.getElementById("loginBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
 
 const loginMessage =
     document.getElementById("loginMessage");
 
-const productMessage =
-    document.getElementById("productMessage");
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const productName =
+    document.getElementById("productName");
+
+const productPrice =
+    document.getElementById("productPrice");
+
+const productCategory =
+    document.getElementById("productCategory");
 
 const productImage =
     document.getElementById("productImage");
+
+const productSizes =
+    document.getElementById("productSizes");
+
+const productColors =
+    document.getElementById("productColors");
+
+const productStock =
+    document.getElementById("productStock");
+
+const productDescription =
+    document.getElementById("productDescription");
+
+const saveProductBtn =
+    document.getElementById("saveProductBtn");
+
+const cancelEditBtn =
+    document.getElementById("cancelEditBtn");
+
+const productMessage =
+    document.getElementById("productMessage");
 
 const imagePreview =
     document.getElementById("imagePreview");
@@ -685,34 +716,45 @@ const imagePreview =
 const previewImg =
     document.getElementById("previewImg");
 
-const currentImageText =
-    document.getElementById("currentImageText");
+const productList =
+    document.getElementById("productList");
 
-const adminProductList =
-    document.getElementById("adminProductList");
-
-const refreshProductsBtn =
-    document.getElementById("refreshProductsBtn");
-
-const productForm =
-    document.getElementById("productForm");
+const refreshBtn =
+    document.getElementById("refreshBtn");
 
 const formTitle =
     document.getElementById("formTitle");
 
-const editNotice =
-    document.getElementById("editNotice");
 
-const addProductBtn =
-    document.getElementById("addProductBtn");
+/* =====================================================
+   MESSAGE FUNCTIONS
+===================================================== */
 
-const cancelEditBtn =
-    document.getElementById("cancelEditBtn");
+function showLoginMessage(message, type = "") {
+
+    loginMessage.textContent =
+        message;
+
+    loginMessage.className =
+        "message " + type;
+
+}
 
 
-/* =========================================
+function showProductMessage(message, type = "") {
+
+    productMessage.textContent =
+        message;
+
+    productMessage.className =
+        "message " + type;
+
+}
+
+
+/* =====================================================
    LOGIN
-========================================= */
+===================================================== */
 
 loginBtn.addEventListener(
     "click",
@@ -720,38 +762,46 @@ loginBtn.addEventListener(
 );
 
 
-document
-    .getElementById("password")
-    .addEventListener(
-        "keydown",
-        function(event) {
+passwordInput.addEventListener(
+    "keydown",
+    function(event) {
 
-            if (event.key === "Enter") {
-                login();
-            }
+        if (event.key === "Enter") {
+
+            login();
 
         }
-    );
+
+    }
+);
 
 
 async function login() {
 
     const email =
-        document
-            .getElementById("email")
-            .value
-            .trim();
+        emailInput.value.trim();
 
     const password =
-        document
-            .getElementById("password")
-            .value;
+        passwordInput.value;
 
 
-    if (!email || !password) {
+    if (!email) {
 
-        loginMessage.textContent =
-            "Please enter email and password.";
+        showLoginMessage(
+            "Please enter your email.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!password) {
+
+        showLoginMessage(
+            "Please enter your password.",
+            "error"
+        );
 
         return;
     }
@@ -759,60 +809,98 @@ async function login() {
 
     loginBtn.disabled = true;
 
-    loginMessage.textContent =
+    loginBtn.textContent =
         "Logging in...";
 
 
-    const {
-        data,
-        error
-    } =
-        await supabaseClient.auth
-            .signInWithPassword({
-
-                email: email,
-
-                password: password
-
-            });
+    showLoginMessage(
+        "Connecting to Supabase..."
+    );
 
 
-    if (error) {
+    try {
 
-        loginMessage.textContent =
-            error.message;
+        const result =
+            await supabaseClient.auth
+                .signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+        if (result.error) {
+
+            console.error(
+                "Supabase Login Error:",
+                result.error
+            );
+
+
+            showLoginMessage(
+                result.error.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (!result.data ||
+            !result.data.user) {
+
+            showLoginMessage(
+                "Login failed. User session was not created.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        showLoginMessage(
+            "Login successful!",
+            "success"
+        );
+
+
+        showDashboard();
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Login Exception:",
+            error
+        );
+
+
+        showLoginMessage(
+            "Connection error: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+    finally {
 
         loginBtn.disabled = false;
 
-        return;
+        loginBtn.textContent =
+            "Login";
+
     }
-
-
-    if (!data || !data.user) {
-
-        loginMessage.textContent =
-            "Login failed. Please try again.";
-
-        loginBtn.disabled = false;
-
-        return;
-    }
-
-
-    loginMessage.textContent =
-        "Login successful!";
-
-
-    loginBtn.disabled = false;
-
-    showDashboard();
 
 }
 
 
-/* =========================================
+/* =====================================================
    SHOW DASHBOARD
-========================================= */
+===================================================== */
 
 function showDashboard() {
 
@@ -822,44 +910,88 @@ function showDashboard() {
     dashboard.style.display =
         "block";
 
-    loadAdminProducts();
+    loadProducts();
 
 }
 
 
-/* =========================================
-   CHECK LOGIN SESSION
-========================================= */
+/* =====================================================
+   CHECK SESSION
+===================================================== */
 
-async function checkUser() {
+async function checkSession() {
 
-    const {
-        data: { user }
-    } =
-        await supabaseClient.auth
-            .getUser();
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth
+                .getSession();
 
 
-    if (user) {
+        if (error) {
 
-        showDashboard();
+            console.error(
+                "Session Error:",
+                error
+            );
 
-    } else {
+            return;
+        }
 
-        loginBox.style.display =
-            "block";
 
-        dashboard.style.display =
-            "none";
+        if (data.session) {
+
+            showDashboard();
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.error(
+            "Session Check Error:",
+            error
+        );
 
     }
 
 }
 
 
-/* =========================================
+/* =====================================================
+   AUTH STATE CHANGE
+===================================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    function(event, session) {
+
+        console.log(
+            "Auth event:",
+            event
+        );
+
+
+        if (session) {
+
+            loginBox.style.display =
+                "none";
+
+            dashboard.style.display =
+                "block";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    LOGOUT
-========================================= */
+===================================================== */
 
 logoutBtn.addEventListener(
     "click",
@@ -867,7 +999,11 @@ logoutBtn.addEventListener(
 
         await supabaseClient.auth.signOut();
 
-        resetEditMode();
+        editingProductId = null;
+
+        oldImageUrl = null;
+
+        resetForm();
 
         dashboard.style.display =
             "none";
@@ -875,20 +1011,20 @@ logoutBtn.addEventListener(
         loginBox.style.display =
             "block";
 
-        document
-            .getElementById("password")
-            .value = "";
+        passwordInput.value = "";
 
-        loginMessage.textContent =
-            "Logged out successfully.";
+        showLoginMessage(
+            "Logged out successfully.",
+            "success"
+        );
 
     }
 );
 
 
-/* =========================================
+/* =====================================================
    IMAGE PREVIEW
-========================================= */
+===================================================== */
 
 productImage.addEventListener(
     "change",
@@ -899,14 +1035,20 @@ productImage.addEventListener(
 
 
         if (!file) {
+
+            imagePreview.style.display =
+                "none";
+
             return;
         }
 
 
         if (!file.type.startsWith("image/")) {
 
-            productMessage.textContent =
-                "Please select a valid image.";
+            showProductMessage(
+                "Please select an image file.",
+                "error"
+            );
 
             this.value = "";
 
@@ -916,8 +1058,10 @@ productImage.addEventListener(
 
         if (file.size > 5 * 1024 * 1024) {
 
-            productMessage.textContent =
-                "Image must be less than 5 MB.";
+            showProductMessage(
+                "Image must be smaller than 5 MB.",
+                "error"
+            );
 
             this.value = "";
 
@@ -925,172 +1069,35 @@ productImage.addEventListener(
         }
 
 
-        previewImg.src =
+        const imageURL =
             URL.createObjectURL(file);
+
+
+        previewImg.src =
+            imageURL;
 
 
         imagePreview.style.display =
             "block";
 
 
-        productMessage.textContent =
-            "";
+        showProductMessage("");
 
     }
 );
 
 
-/* =========================================
-   ADD / UPDATE BUTTON
-========================================= */
+/* =====================================================
+   SAVE PRODUCT
+===================================================== */
 
-addProductBtn.addEventListener(
+saveProductBtn.addEventListener(
     "click",
-    async function() {
-
-        const name =
-            document
-                .getElementById("productName")
-                .value
-                .trim();
-
-
-        const priceValue =
-            document
-                .getElementById("productPrice")
-                .value;
-
-
-        const price =
-            Number(priceValue);
-
-
-        const category =
-            document
-                .getElementById("productCategory")
-                .value
-                .trim();
-
-
-        const sizes =
-            document
-                .getElementById("productSizes")
-                .value
-                .trim();
-
-
-        const colors =
-            document
-                .getElementById("productColors")
-                .value
-                .trim();
-
-
-        const stockValue =
-            document
-                .getElementById("productStock")
-                .value;
-
-
-        const stock =
-            Number(stockValue);
-
-
-        const description =
-            document
-                .getElementById("productDescription")
-                .value
-                .trim();
-
-
-        const file =
-            productImage.files[0];
-
-
-        if (!name) {
-
-            productMessage.textContent =
-                "Please enter product name.";
-
-            return;
-        }
-
-
-        if (
-            priceValue === "" ||
-            isNaN(price) ||
-            price < 0
-        ) {
-
-            productMessage.textContent =
-                "Please enter a valid price.";
-
-            return;
-        }
-
-
-        if (
-            stockValue === "" ||
-            isNaN(stock) ||
-            stock < 0
-        ) {
-
-            productMessage.textContent =
-                "Please enter a valid stock.";
-
-            return;
-        }
-
-
-        /* EDIT */
-
-        if (editingProductId !== null) {
-
-            await updateProduct({
-
-                name,
-                price,
-                category,
-                sizes,
-                colors,
-                stock,
-                description,
-                file
-
-            });
-
-            return;
-        }
-
-
-        /* ADD */
-
-        if (!file) {
-
-            productMessage.textContent =
-                "Please choose a product image.";
-
-            return;
-        }
-
-
-        await addNewProduct({
-
-            name,
-            price,
-            category,
-            sizes,
-            colors,
-            stock,
-            description,
-            file
-
-        });
-
-    }
+    saveProduct
 );
 
 
-/* =========================================
-   ADD NEW PRODUCT
-========================
+async function saveProduct() {
+
+    const name =
+        productName.
