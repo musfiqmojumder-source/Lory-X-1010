@@ -1,19 +1,19 @@
-/* =========================================
+/* =========================================================
    LORY X 1010
-   Supabase Product System
-========================================= */
+   PRODUCT SYSTEM
+   Supabase + Search + Filter + WhatsApp Order
+========================================================= */
 
 
-/* =========================================
+/* =========================================================
    SUPABASE CONFIG
-========================================= */
+========================================================= */
 
 const SUPABASE_URL =
     "https://hmvzqwatmsctlvzylmys.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_BJXkMjk7jvgYKXgiYMbvUw_6S17oAAY";
-
 
 const supabaseClient =
     window.supabase.createClient(
@@ -22,55 +22,141 @@ const supabaseClient =
     );
 
 
-/* =========================================
-   PRODUCT DATA
-========================================= */
+/* =========================================================
+   WHATSAPP CONFIG
+========================================================= */
+
+const WHATSAPP_NUMBER =
+    "8801754618724";
+
+
+/* =========================================================
+   GLOBAL PRODUCT DATA
+========================================================= */
 
 let products = [];
 
 
-/* =========================================
+/* =========================================================
+   DEFAULT IMAGE
+========================================================= */
+
+const DEFAULT_IMAGE =
+    "https://placehold.co/800x800?text=Lory+X+1010";
+
+
+/* =========================================================
+   ESCAPE HTML
+   Prevent unsafe HTML from product data
+========================================================= */
+
+function escapeHTML(value) {
+
+    if (value === null ||
+        value === undefined) {
+
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
+   FORMAT PRICE
+========================================================= */
+
+function formatPrice(price) {
+
+    const number =
+        Number(price) || 0;
+
+    return `৳${number.toLocaleString("en-BD")}`;
+}
+
+
+/* =========================================================
+   NORMALIZE CATEGORY
+========================================================= */
+
+function normalizeCategory(category) {
+
+    return String(category || "Others")
+        .trim()
+        .toLowerCase();
+
+}
+
+
+/* =========================================================
    CREATE PRODUCT CARD
-========================================= */
+========================================================= */
 
 function createProductCard(product) {
 
+    const id =
+        encodeURIComponent(product.id);
+
+    const name =
+        escapeHTML(product.name || "Unnamed Product");
+
+    const category =
+        escapeHTML(product.category || "Others");
+
+    const image =
+        product.image_url || DEFAULT_IMAGE;
+
     const price =
-        `৳${Number(product.price).toLocaleString("en-BD")}`;
+        formatPrice(product.price);
+
 
     return `
+
         <article class="product-card">
 
-            <a href="product.html?id=${product.id}">
+            <a
+                href="product.html?id=${id}"
+                aria-label="View ${name}"
+            >
 
                 <div class="product-image">
 
                     <img
-                        src="${product.image_url || "https://placehold.co/800x800?text=No+Image"}"
-                        alt="${product.name}"
+                        src="${escapeHTML(image)}"
+                        alt="${name}"
                         loading="lazy"
+                        onerror="this.src='${DEFAULT_IMAGE}'"
                     >
 
                 </div>
 
             </a>
 
+
             <div class="product-info">
 
                 <div class="product-category">
-                    ${product.category || "Others"}
+                    ${category}
                 </div>
 
+
                 <h3 class="product-name">
-                    ${product.name}
+                    ${name}
                 </h3>
+
 
                 <div class="product-price">
                     ${price}
                 </div>
 
+
                 <a
-                    href="product.html?id=${product.id}"
+                    href="product.html?id=${id}"
                     class="product-button"
                 >
                     View Product
@@ -79,26 +165,36 @@ function createProductCard(product) {
             </div>
 
         </article>
+
     `;
 }
 
 
-/* =========================================
+/* =========================================================
    DISPLAY PRODUCTS
-========================================= */
+========================================================= */
 
-function displayProducts(productList, containerId) {
+function displayProducts(
+    productList,
+    containerId
+) {
 
     const container =
         document.getElementById(containerId);
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
+
 
     const noProducts =
         document.getElementById("no-products");
 
 
-    if (productList.length === 0) {
+    /* Empty result */
+
+    if (!productList ||
+        productList.length === 0) {
 
         container.innerHTML = "";
 
@@ -117,97 +213,226 @@ function displayProducts(productList, containerId) {
 
     container.innerHTML =
         productList
-            .map(product => createProductCard(product))
+            .map(createProductCard)
             .join("");
+
 }
 
 
-/* =========================================
-   LOAD PRODUCTS FROM SUPABASE
-========================================= */
+/* =========================================================
+   LOADING MESSAGE
+========================================================= */
 
-async function loadProducts() {
+function showLoading(containerId) {
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("products")
-        .select("*")
-        .eq("is_published", true)
-        .order("created_at", {
-            ascending: false
-        });
+    const container =
+        document.getElementById(containerId);
 
-
-    if (error) {
-
-        console.error(
-            "Product loading error:",
-            error
-        );
-
-        const container =
-            document.getElementById("all-products");
-
-        if (container) {
-
-            container.innerHTML = `
-                <div style="
-                    grid-column: 1 / -1;
-                    text-align: center;
-                    padding: 60px 20px;
-                ">
-
-                    <h3>Unable to load products</h3>
-
-                    <p style="
-                        color: #666;
-                        margin-top: 10px;
-                    ">
-                        Please try again later.
-                    </p>
-
-                </div>
-            `;
-        }
-
+    if (!container) {
         return;
     }
 
 
-    products = data || [];
+    container.innerHTML = `
 
+        <div class="loading">
 
-    /* ALL PRODUCTS */
+            <div class="loading-spinner"></div>
 
-    displayProducts(
-        products,
-        "all-products"
-    );
+            <p>
+                Loading products...
+            </p>
 
+        </div>
 
-    /* FEATURED PRODUCTS */
+    `;
 
-    displayProducts(
-        products.slice(0, 4),
-        "featured-products"
-    );
 }
 
 
-/* =========================================
+/* =========================================================
+   ERROR MESSAGE
+========================================================= */
+
+function showProductError(containerId) {
+
+    const container =
+        document.getElementById(containerId);
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div
+            style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:70px 20px;
+            "
+        >
+
+            <h2>
+                Unable to load products
+            </h2>
+
+            <p
+                style="
+                    color:#666;
+                    margin:10px 0 25px;
+                "
+            >
+                Please check your internet connection
+                and try again.
+            </p>
+
+            <button
+                type="button"
+                class="primary-btn"
+                onclick="loadProducts()"
+            >
+                Try Again
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   LOAD PRODUCTS FROM SUPABASE
+========================================================= */
+
+async function loadProducts() {
+
+    const allProductsContainer =
+        document.getElementById("all-products");
+
+    const featuredContainer =
+        document.getElementById("featured-products");
+
+
+    if (allProductsContainer) {
+        showLoading("all-products");
+    }
+
+
+    if (featuredContainer) {
+        showLoading("featured-products");
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+
+            .from("products")
+
+            .select("*")
+
+            .eq(
+                "is_published",
+                true
+            )
+
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        products =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        /* =====================================
+           ALL PRODUCTS
+        ===================================== */
+
+        displayProducts(
+            products,
+            "all-products"
+        );
+
+
+        /* =====================================
+           FEATURED PRODUCTS
+           First 4 latest products
+        ===================================== */
+
+        displayProducts(
+            products.slice(0, 4),
+            "featured-products"
+        );
+
+
+        /*
+           Apply URL category if available
+        */
+
+        applyURLCategory();
+
+
+    } catch (error) {
+
+        console.error(
+            "Supabase Product Error:",
+            error
+        );
+
+
+        showProductError(
+            "all-products"
+        );
+
+
+        showProductError(
+            "featured-products"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
    SEARCH + CATEGORY FILTER
-========================================= */
+========================================================= */
 
 function setupProductFilters() {
 
     const searchInput =
-        document.getElementById("product-search");
+        document.getElementById(
+            "product-search"
+        );
+
 
     const filterButtons =
-        document.querySelectorAll(".filter-btn");
+        document.querySelectorAll(
+            ".filter-btn"
+        );
 
+
+    /*
+       If this is not products page,
+       do nothing.
+    */
 
     if (!searchInput &&
         filterButtons.length === 0) {
@@ -219,6 +444,10 @@ function setupProductFilters() {
     let currentCategory = "all";
 
 
+    /* =====================================
+       FILTER FUNCTION
+    ===================================== */
+
     function filterProducts() {
 
         const searchText =
@@ -229,48 +458,77 @@ function setupProductFilters() {
                 : "";
 
 
-        const filteredProducts =
+        const filtered =
             products.filter(product => {
 
-                const productCategory =
-                    product.category || "Others";
+                const name =
+                    String(
+                        product.name || ""
+                    ).toLowerCase();
 
 
-                const matchesCategory =
-                    currentCategory === "all" ||
-                    productCategory === currentCategory;
+                const category =
+                    String(
+                        product.category || "Others"
+                    ).toLowerCase();
 
 
-                const productName =
-                    (product.name || "")
-                        .toLowerCase();
+                const description =
+                    String(
+                        product.description || ""
+                    ).toLowerCase();
 
 
-                const categoryText =
-                    productCategory
-                        .toLowerCase();
+                const categoryMatch =
+
+                    currentCategory === "all"
+
+                    ||
+
+                    normalizeCategory(
+                        product.category
+                    ) ===
+                    normalizeCategory(
+                        currentCategory
+                    );
 
 
-                const matchesSearch =
-                    productName.includes(searchText) ||
-                    categoryText.includes(searchText);
+                const searchMatch =
+
+                    !searchText
+
+                    ||
+
+                    name.includes(searchText)
+
+                    ||
+
+                    category.includes(searchText)
+
+                    ||
+
+                    description.includes(searchText);
 
 
                 return (
-                    matchesCategory &&
-                    matchesSearch
+                    categoryMatch &&
+                    searchMatch
                 );
+
             });
 
 
         displayProducts(
-            filteredProducts,
+            filtered,
             "all-products"
         );
+
     }
 
 
-    /* SEARCH */
+    /* =====================================
+       SEARCH EVENT
+    ===================================== */
 
     if (searchInput) {
 
@@ -282,7 +540,9 @@ function setupProductFilters() {
     }
 
 
-    /* CATEGORY BUTTONS */
+    /* =====================================
+       CATEGORY BUTTONS
+    ===================================== */
 
     filterButtons.forEach(button => {
 
@@ -291,25 +551,26 @@ function setupProductFilters() {
             () => {
 
                 currentCategory =
-                    button.dataset.category;
+                    button.dataset.category ||
+                    "all";
 
+
+                /*
+                   Active button
+                */
 
                 filterButtons.forEach(btn => {
 
-                    btn.style.background =
-                        "#ffffff";
-
-                    btn.style.color =
-                        "#111111";
+                    btn.classList.remove(
+                        "active"
+                    );
 
                 });
 
 
-                button.style.background =
-                    "#111111";
-
-                button.style.color =
-                    "#ffffff";
+                button.classList.add(
+                    "active"
+                );
 
 
                 filterProducts();
@@ -319,20 +580,240 @@ function setupProductFilters() {
 
     });
 
+
+    /*
+       Save filter function
+       for URL category system
+    */
+
+    window.applyProductFilter =
+        function(category) {
+
+            currentCategory =
+                category || "all";
+
+
+            filterButtons.forEach(button => {
+
+                const buttonCategory =
+                    button.dataset.category ||
+                    "all";
+
+
+                if (
+                    normalizeCategory(
+                        buttonCategory
+                    ) ===
+                    normalizeCategory(
+                        currentCategory
+                    )
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                } else {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            });
+
+
+            filterProducts();
+
+        };
+
 }
 
 
-/* =========================================
+/* =========================================================
+   URL CATEGORY FILTER
+========================================================= */
+
+function applyURLCategory() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const category =
+        params.get("category");
+
+
+    if (!category) {
+        return;
+    }
+
+
+    /*
+       Convert URL values such as:
+
+       fashion
+       gadget
+       home
+       others
+
+       to the filter button's value.
+    */
+
+    let categoryName =
+        category;
+
+
+    if (
+        category.toLowerCase()
+            === "fashion"
+    ) {
+
+        categoryName = "Fashion";
+
+    }
+
+
+    if (
+        category.toLowerCase()
+            === "gadget"
+    ) {
+
+        categoryName = "Gadget";
+
+    }
+
+
+    if (
+        category.toLowerCase()
+            === "home"
+    ) {
+
+        categoryName = "Home";
+
+    }
+
+
+    if (
+        category.toLowerCase()
+            === "others"
+    ) {
+
+        categoryName = "Others";
+
+    }
+
+
+    if (
+        typeof window.applyProductFilter
+        === "function"
+    ) {
+
+        window.applyProductFilter(
+            categoryName
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE WHATSAPP MESSAGE
+========================================================= */
+
+function createWhatsAppMessage(
+    product,
+    quantity
+) {
+
+    const productName =
+        product.name || "Product";
+
+
+    const productId =
+        product.id || "";
+
+
+    const price =
+        formatPrice(product.price);
+
+
+    const total =
+        (Number(product.price) || 0)
+        *
+        quantity;
+
+
+    return `Hello Lory X 1010,
+
+I want to order this product.
+
+Product: ${productName}
+Product ID: ${productId}
+Price: ${price}
+Quantity: ${quantity}
+Total: ${formatPrice(total)}
+
+Please confirm my order.
+
+Thank you.`;
+
+}
+
+
+/* =========================================================
+   OPEN WHATSAPP ORDER
+========================================================= */
+
+function orderOnWhatsApp(
+    product,
+    quantity
+) {
+
+    const message =
+        createWhatsAppMessage(
+            product,
+            quantity
+        );
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        whatsappURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+}
+
+
+/* =========================================================
    PRODUCT DETAILS
-========================================= */
+========================================================= */
 
 async function loadProductDetails() {
 
     const container =
-        document.getElementById("product-detail");
+        document.getElementById(
+            "product-detail"
+        );
 
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
 
     const params =
@@ -347,187 +828,255 @@ async function loadProductDetails() {
 
     if (!productId) {
 
-        showProductNotFound(container);
-
-        return;
-    }
-
-
-    const {
-        data: product,
-        error
-    } = await supabaseClient
-        .from("products")
-        .select("*")
-        .eq("id", productId)
-        .eq("is_published", true)
-        .single();
-
-
-    if (error || !product) {
-
-        console.error(
-            "Product details error:",
-            error
+        showProductNotFound(
+            container
         );
 
-        showProductNotFound(container);
-
         return;
+
     }
 
 
-    document.title =
-        `${product.name} | Lory X 1010`;
+    try {
+
+        const {
+            data: product,
+            error
+        } = await supabaseClient
+
+            .from("products")
+
+            .select("*")
+
+            .eq(
+                "id",
+                productId
+            )
+
+            .eq(
+                "is_published",
+                true
+            )
+
+            .single();
 
 
-    const price =
-        `৳${Number(product.price).toLocaleString("en-BD")}`;
+        if (error ||
+            !product) {
+
+            throw error ||
+                new Error(
+                    "Product not found"
+                );
+
+        }
 
 
-    container.innerHTML = `
+        /*
+           Page title
+        */
 
-        <div class="detail-image">
-
-            <img
-                src="${product.image_url || "https://placehold.co/800x800?text=No+Image"}"
-                alt="${product.name}"
-            >
-
-        </div>
+        document.title =
+            `${product.name} | Lory X 1010`;
 
 
-        <div>
+        /*
+           Product data
+        */
 
-            <div class="detail-category">
-                ${product.category || "Others"}
+        const image =
+            product.image_url ||
+            DEFAULT_IMAGE;
+
+
+        const name =
+            escapeHTML(
+                product.name ||
+                "Unnamed Product"
+            );
+
+
+        const category =
+            escapeHTML(
+                product.category ||
+                "Others"
+            );
+
+
+        const description =
+            escapeHTML(
+                product.description ||
+                "No description available."
+            );
+
+
+        const price =
+            formatPrice(
+                product.price
+            );
+
+
+        /*
+           Stock
+        */
+
+        const stock =
+            Number(product.stock);
+
+
+        const hasStock =
+            Number.isNaN(stock)
+                ? true
+                : stock > 0;
+
+
+        /*
+           Sizes
+        */
+
+        const sizes =
+            product.sizes
+                ? escapeHTML(
+                    product.sizes
+                )
+                : "";
+
+
+        /*
+           Colors
+        */
+
+        const colors =
+            product.colors
+                ? escapeHTML(
+                    product.colors
+                )
+                : "";
+
+
+        /*
+           Build detail page
+        */
+
+        container.innerHTML = `
+
+            <div class="detail-image">
+
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${name}"
+                    onerror="this.src='${DEFAULT_IMAGE}'"
+                >
+
             </div>
 
 
-            <h1 class="detail-title">
-                ${product.name}
-            </h1>
+            <div class="detail-info">
 
 
-            <div class="detail-price">
-                ${price}
-            </div>
+                <div class="detail-category">
+                    ${category}
+                </div>
 
 
-            <p class="detail-description">
-                ${product.description || "No description available."}
-            </p>
+                <h1 class="detail-title">
+                    ${name}
+                </h1>
 
 
-            ${
-                product.sizes
-                ? `
-                    <p style="margin-bottom:15px;">
-                        <strong>Sizes:</strong>
-                        ${product.sizes}
-                    </p>
-                  `
-                : ""
-            }
+                <div class="detail-price">
+                    ${price}
+                </div>
 
 
-            ${
-                product.colors
-                ? `
-                    <p style="margin-bottom:15px;">
-                        <strong>Colors:</strong>
-                        ${product.colors}
-                    </p>
-                  `
-                : ""
-            }
+                <p class="detail-description">
+                    ${description}
+                </p>
 
 
-            ${
-                product.stock > 0
-                ? `
-                    <p style="
-                        color: green;
-                        margin-bottom: 20px;
-                    ">
-                        In Stock
-                    </p>
-                  `
-                : `
-                    <p style="
-                        color: #d00;
-                        margin-bottom: 20px;
-                    ">
-                        Out of Stock
-                    </p>
-                  `
-            }
+                <div class="product-meta">
 
 
-            <a
-                href="#"
-                class="buy-button"
-                onclick="return false;"
-            >
-                Buy Now
-            </a>
+                    ${
+                        sizes
+                        ? `
 
-        </div>
+                            <div class="meta-row">
 
-    `;
-}
+                                <div class="meta-label">
+                                    Sizes
+                                </div>
 
+                                <div class="meta-value">
+                                    ${sizes}
+                                </div>
 
-/* =========================================
-   PRODUCT NOT FOUND
-========================================= */
+                            </div>
 
-function showProductNotFound(container) {
-
-    container.innerHTML = `
-
-        <div style="
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 60px 20px;
-        ">
-
-            <h2>
-                Product Not Found
-            </h2>
-
-            <p style="
-                margin: 15px 0 25px;
-            ">
-                Sorry, this product is not available.
-            </p>
-
-            <a
-                href="products.html"
-                class="primary-btn"
-            >
-                Back to Products
-            </a>
-
-        </div>
-
-    `;
-}
+                        `
+                        : ""
+                    }
 
 
-/* =========================================
-   START WEBSITE
-========================================= */
+                    ${
+                        colors
+                        ? `
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+                            <div class="meta-row">
 
-        await loadProducts();
+                                <div class="meta-label">
+                                    Colors
+                                </div>
 
-        setupProductFilters();
+                                <div class="meta-value">
+                                    ${colors}
+                                </div>
 
-        await loadProductDetails();
+                            </div>
 
-    }
-);
+                        `
+                        : ""
+                    }
+
+
+                    <div class="meta-row">
+
+                        <div class="meta-label">
+                            Availability
+                        </div>
+
+
+                        <div
+                            class="
+                                meta-value
+                                stock
+                                ${
+                                    hasStock
+                                        ? "in-stock"
+                                        : "out-stock"
+                                }
+                            "
+                        >
+
+                            ${
+                                hasStock
+                                    ? "In Stock"
+                                    : "Out of Stock"
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                ${
+                    hasStock
+                    ? `
+
+                        <div class="order-area">
+
+                            <div class="order-label">
+                           
