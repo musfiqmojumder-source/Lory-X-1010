@@ -5,23 +5,14 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Admin | Lory X 1010</title>
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    <link rel="stylesheet" href="css/style.css">
 
     <style>
-
-        /* =====================================
-           ADMIN GENERAL
-        ===================================== */
 
         .admin-section {
             padding: 60px 0;
@@ -46,11 +37,6 @@
             margin-bottom: 25px;
         }
 
-
-        /* =====================================
-           INPUTS
-        ===================================== */
-
         .admin-input {
             width: 100%;
             padding: 14px;
@@ -68,11 +54,6 @@
             resize: vertical;
         }
 
-
-        /* =====================================
-           BUTTONS
-        ===================================== */
-
         .admin-button {
             width: 100%;
             padding: 14px;
@@ -85,8 +66,9 @@
             cursor: pointer;
         }
 
-        .admin-button:hover {
-            opacity: .9;
+        .admin-button:disabled {
+            opacity: .6;
+            cursor: not-allowed;
         }
 
         .logout-button {
@@ -99,21 +81,11 @@
             font-weight: 600;
         }
 
-
-        /* =====================================
-           MESSAGES
-        ===================================== */
-
         .message {
             margin-top: 15px;
             font-size: 14px;
             line-height: 1.5;
         }
-
-
-        /* =====================================
-           DASHBOARD
-        ===================================== */
 
         .dashboard {
             display: none;
@@ -127,11 +99,6 @@
             gap: 15px;
         }
 
-
-        /* =====================================
-           PRODUCT FORM
-        ===================================== */
-
         .product-form {
             padding: 25px;
             border: 1px solid #ddd;
@@ -143,11 +110,6 @@
         .product-form h2 {
             margin-bottom: 20px;
         }
-
-
-        /* =====================================
-           EDIT MODE
-        ===================================== */
 
         .edit-mode {
             border: 2px solid #111;
@@ -173,11 +135,6 @@
             cursor: pointer;
             font-weight: 700;
         }
-
-
-        /* =====================================
-           IMAGE UPLOAD
-        ===================================== */
 
         .file-label {
             display: block;
@@ -217,11 +174,6 @@
             font-size: 14px;
         }
 
-
-        /* =====================================
-           MANAGE PRODUCTS
-        ===================================== */
-
         .manage-section {
             margin-top: 40px;
         }
@@ -243,11 +195,6 @@
             cursor: pointer;
             font-weight: 600;
         }
-
-
-        /* =====================================
-           PRODUCT LIST
-        ===================================== */
 
         .admin-product-list {
             display: grid;
@@ -309,11 +256,6 @@
             color: #a00000;
         }
 
-
-        /* =====================================
-           PRODUCT ACTIONS
-        ===================================== */
-
         .product-actions {
             display: flex;
             flex-direction: column;
@@ -336,21 +278,11 @@
             color: #fff;
         }
 
-        .edit-button {
-            background: #fff;
-            color: #111;
-        }
-
         .delete-button {
             border-color: #b00000;
             color: #b00000;
             background: #fff;
         }
-
-
-        /* =====================================
-           EMPTY PRODUCTS
-        ===================================== */
 
         .empty-products {
             text-align: center;
@@ -360,19 +292,10 @@
             color: #666;
         }
 
-
-        /* =====================================
-           MOBILE
-        ===================================== */
-
         @media (max-width: 700px) {
 
             .admin-section {
                 padding: 40px 0;
-            }
-
-            .dashboard-header {
-                align-items: flex-start;
             }
 
             .admin-product {
@@ -395,10 +318,6 @@
                 min-width: 100px;
             }
 
-            .manage-header {
-                align-items: flex-start;
-            }
-
         }
 
     </style>
@@ -409,31 +328,19 @@
 <body>
 
 
-<!-- =========================================
-     HEADER
-========================================= -->
-
 <header class="header">
 
     <div class="container navbar">
 
-        <a
-            href="index.html"
-            class="logo"
-        >
+        <a href="index.html" class="logo">
             Lory X <span>1010</span>
         </a>
 
-
         <nav class="nav">
 
-            <a href="index.html">
-                Home
-            </a>
+            <a href="index.html">Home</a>
 
-            <a href="products.html">
-                Products
-            </a>
+            <a href="products.html">Products</a>
 
         </nav>
 
@@ -442,11 +349,6 @@
 </header>
 
 
-
-<!-- =========================================
-     MAIN
-========================================= -->
-
 <main>
 
 <section class="admin-section">
@@ -454,35 +356,27 @@
 <div class="container">
 
 
-<!-- =========================================
-     LOGIN
-========================================= -->
+<!-- LOGIN -->
 
-<div
-    id="loginBox"
-    class="admin-box"
->
+<div id="loginBox" class="admin-box">
 
-    <h1>
-        Admin Login
-    </h1>
-
+    <h1>Admin Login</h1>
 
     <input
         type="email"
         id="email"
         class="admin-input"
         placeholder="Admin Email"
+        autocomplete="email"
     >
-
 
     <input
         type="password"
         id="password"
         class="admin-input"
         placeholder="Password"
+        autocomplete="current-password"
     >
-
 
     <button
         id="loginBtn"
@@ -490,7 +384,6 @@
     >
         Login
     </button>
-
 
     <p
         id="loginMessage"
@@ -500,235 +393,209 @@
 </div>
 
 
+<!-- DASHBOARD -->
 
-<!-- =========================================
-     DASHBOARD
-========================================= -->
-
-<div
-    id="dashboard"
-    class="dashboard"
->
+<div id="dashboard" class="dashboard">
 
 
-<!-- DASHBOARD HEADER -->
-
-<div class="dashboard-header">
-
-    <div>
-
-        <h1>
-            Admin Dashboard
-        </h1>
-
-        <p>
-            Lory X 1010
-        </p>
-
-    </div>
-
-
-    <button
-        id="logoutBtn"
-        class="logout-button"
-    >
-        Logout
-    </button>
-
-</div>
-
-
-
-<!-- =========================================
-     ADD / EDIT PRODUCT FORM
-========================================= -->
-
-<div
-    id="productForm"
-    class="product-form"
->
-
-    <div
-        id="editNotice"
-        class="edit-notice"
-    >
-        ✏️ Editing Product
-    </div>
-
-
-    <h2 id="formTitle">
-        Add Product
-    </h2>
-
-
-    <input
-        type="text"
-        id="productName"
-        class="admin-input"
-        placeholder="Product Name"
-    >
-
-
-    <input
-        type="number"
-        id="productPrice"
-        class="admin-input"
-        placeholder="Price"
-        min="0"
-    >
-
-
-    <input
-        type="text"
-        id="productCategory"
-        class="admin-input"
-        placeholder="Category e.g. Fashion"
-    >
-
-
-    <!-- IMAGE -->
-
-    <label
-        for="productImage"
-        class="file-label"
-    >
-        📷 Choose Product Image
-    </label>
-
-
-    <input
-        type="file"
-        id="productImage"
-        accept="image/*"
-    >
-
-
-    <div
-        id="currentImageText"
-        class="current-image-text"
-    >
-        Current product image:
-    </div>
-
-
-    <div
-        id="imagePreview"
-        class="image-preview"
-    >
-
-        <img
-            id="previewImg"
-            src=""
-            alt="Product Preview"
-        >
-
-    </div>
-
-
-    <input
-        type="text"
-        id="productSizes"
-        class="admin-input"
-        placeholder="Sizes e.g. M, L, XL, XXL"
-    >
-
-
-    <input
-        type="text"
-        id="productColors"
-        class="admin-input"
-        placeholder="Colors e.g. Black, White"
-    >
-
-
-    <input
-        type="number"
-        id="productStock"
-        class="admin-input"
-        placeholder="Stock"
-        value="0"
-        min="0"
-    >
-
-
-    <textarea
-        id="productDescription"
-        class="admin-input"
-        placeholder="Product Description"
-    ></textarea>
-
-
-    <button
-        id="addProductBtn"
-        class="admin-button"
-    >
-        Add Product
-    </button>
-
-
-    <button
-        id="cancelEditBtn"
-        class="cancel-edit-button"
-        style="display:none;"
-    >
-        Cancel Edit
-    </button>
-
-
-    <p
-        id="productMessage"
-        class="message"
-    ></p>
-
-</div>
-
-
-
-<!-- =========================================
-     MANAGE PRODUCTS
-========================================= -->
-
-<div class="manage-section">
-
-
-    <div class="manage-header">
+    <div class="dashboard-header">
 
         <div>
 
-            <h2>
-                Manage Products
-            </h2>
+            <h1>Admin Dashboard</h1>
 
-            <p>
-                View, edit, publish, hide or delete products.
-            </p>
+            <p>Lory X 1010</p>
 
         </div>
 
-
         <button
-            id="refreshProductsBtn"
-            class="refresh-button"
+            id="logoutBtn"
+            class="logout-button"
         >
-            🔄 Refresh
+            Logout
         </button>
 
     </div>
 
 
+    <!-- PRODUCT FORM -->
 
     <div
-        id="adminProductList"
-        class="admin-product-list"
+        id="productForm"
+        class="product-form"
     >
 
-        <div class="empty-products">
-            Loading products...
+        <div
+            id="editNotice"
+            class="edit-notice"
+        >
+            ✏️ Editing Product
         </div>
+
+        <h2 id="formTitle">
+            Add Product
+        </h2>
+
+
+        <input
+            type="text"
+            id="productName"
+            class="admin-input"
+            placeholder="Product Name"
+        >
+
+
+        <input
+            type="number"
+            id="productPrice"
+            class="admin-input"
+            placeholder="Price"
+            min="0"
+            step="0.01"
+        >
+
+
+        <input
+            type="text"
+            id="productCategory"
+            class="admin-input"
+            placeholder="Category e.g. Fashion"
+        >
+
+
+        <label
+            for="productImage"
+            class="file-label"
+        >
+            📷 Choose Product Image
+        </label>
+
+
+        <input
+            type="file"
+            id="productImage"
+            accept="image/*"
+        >
+
+
+        <div
+            id="currentImageText"
+            class="current-image-text"
+        >
+            Current product image
+        </div>
+
+
+        <div
+            id="imagePreview"
+            class="image-preview"
+        >
+
+            <img
+                id="previewImg"
+                src=""
+                alt="Preview"
+            >
+
+        </div>
+
+
+        <input
+            type="text"
+            id="productSizes"
+            class="admin-input"
+            placeholder="Sizes e.g. M, L, XL, XXL"
+        >
+
+
+        <input
+            type="text"
+            id="productColors"
+            class="admin-input"
+            placeholder="Colors e.g. Black, White"
+        >
+
+
+        <input
+            type="number"
+            id="productStock"
+            class="admin-input"
+            placeholder="Stock"
+            value="0"
+            min="0"
+        >
+
+
+        <textarea
+            id="productDescription"
+            class="admin-input"
+            placeholder="Product Description"
+        ></textarea>
+
+
+        <button
+            id="addProductBtn"
+            class="admin-button"
+        >
+            Add Product
+        </button>
+
+
+        <button
+            id="cancelEditBtn"
+            class="cancel-edit-button"
+            style="display:none;"
+        >
+            Cancel Edit
+        </button>
+
+
+        <p
+            id="productMessage"
+            class="message"
+        ></p>
 
     </div>
 
-</div>
+
+    <!-- MANAGE PRODUCTS -->
+
+    <div class="manage-section">
+
+        <div class="manage-header">
+
+            <div>
+
+                <h2>Manage Products</h2>
+
+                <p>
+                    View, edit, publish, hide or delete products.
+                </p>
+
+            </div>
+
+            <button
+                id="refreshProductsBtn"
+                class="refresh-button"
+            >
+                🔄 Refresh
+            </button>
+
+        </div>
+
+
+        <div
+            id="adminProductList"
+            class="admin-product-list"
+        >
+
+            <div class="empty-products">
+                Loading products...
+            </div>
+
+        </div>
+
+    </div>
 
 
 </div>
@@ -739,11 +606,6 @@
 
 </main>
 
-
-
-<!-- =========================================
-     FOOTER
-========================================= -->
 
 <footer class="footer">
 
@@ -758,10 +620,7 @@
 </footer>
 
 
-
-<!-- =========================================
-     SUPABASE
-========================================= -->
+<!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -769,12 +628,11 @@
 <script>
 
 /* =========================================
-   SUPABASE CONFIGURATION
+   SUPABASE CONFIG
 ========================================= */
 
 const SUPABASE_URL =
     "https://hmvzqwatmsctlvzylmys.supabase.co";
-
 
 const SUPABASE_KEY =
     "sb_publishable_BJXkMjk7jvgYKXgiYMbvUw_6S17oAAY";
@@ -831,39 +689,201 @@ const currentImageText =
     document.getElementById("currentImageText");
 
 const adminProductList =
-    document.getElementById(
-        "adminProductList"
-    );
+    document.getElementById("adminProductList");
 
 const refreshProductsBtn =
-    document.getElementById(
-        "refreshProductsBtn"
-    );
+    document.getElementById("refreshProductsBtn");
 
 const productForm =
-    document.getElementById(
-        "productForm"
-    );
+    document.getElementById("productForm");
 
 const formTitle =
-    document.getElementById(
-        "formTitle"
-    );
+    document.getElementById("formTitle");
 
 const editNotice =
-    document.getElementById(
-        "editNotice"
-    );
+    document.getElementById("editNotice");
 
 const addProductBtn =
-    document.getElementById(
-        "addProductBtn"
-    );
+    document.getElementById("addProductBtn");
 
 const cancelEditBtn =
-    document.getElementById(
-        "cancelEditBtn"
+    document.getElementById("cancelEditBtn");
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+loginBtn.addEventListener(
+    "click",
+    login
+);
+
+
+document
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+                login();
+            }
+
+        }
     );
+
+
+async function login() {
+
+    const email =
+        document
+            .getElementById("email")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("password")
+            .value;
+
+
+    if (!email || !password) {
+
+        loginMessage.textContent =
+            "Please enter email and password.";
+
+        return;
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginMessage.textContent =
+        "Logging in...";
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth
+            .signInWithPassword({
+
+                email: email,
+
+                password: password
+
+            });
+
+
+    if (error) {
+
+        loginMessage.textContent =
+            error.message;
+
+        loginBtn.disabled = false;
+
+        return;
+    }
+
+
+    if (!data || !data.user) {
+
+        loginMessage.textContent =
+            "Login failed. Please try again.";
+
+        loginBtn.disabled = false;
+
+        return;
+    }
+
+
+    loginMessage.textContent =
+        "Login successful!";
+
+
+    loginBtn.disabled = false;
+
+    showDashboard();
+
+}
+
+
+/* =========================================
+   SHOW DASHBOARD
+========================================= */
+
+function showDashboard() {
+
+    loginBox.style.display =
+        "none";
+
+    dashboard.style.display =
+        "block";
+
+    loadAdminProducts();
+
+}
+
+
+/* =========================================
+   CHECK LOGIN SESSION
+========================================= */
+
+async function checkUser() {
+
+    const {
+        data: { user }
+    } =
+        await supabaseClient.auth
+            .getUser();
+
+
+    if (user) {
+
+        showDashboard();
+
+    } else {
+
+        loginBox.style.display =
+            "block";
+
+        dashboard.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+logoutBtn.addEventListener(
+    "click",
+    async function() {
+
+        await supabaseClient.auth.signOut();
+
+        resetEditMode();
+
+        dashboard.style.display =
+            "none";
+
+        loginBox.style.display =
+            "block";
+
+        document
+            .getElementById("password")
+            .value = "";
+
+        loginMessage.textContent =
+            "Logged out successfully.";
+
+    }
+);
 
 
 /* =========================================
@@ -872,14 +892,13 @@ const cancelEditBtn =
 
 productImage.addEventListener(
     "change",
-    function () {
+    function() {
 
         const file =
             this.files[0];
 
 
         if (!file) {
-
             return;
         }
 
@@ -887,7 +906,7 @@ productImage.addEventListener(
         if (!file.type.startsWith("image/")) {
 
             productMessage.textContent =
-                "Please select an image file.";
+                "Please select a valid image.";
 
             this.value = "";
 
@@ -895,10 +914,7 @@ productImage.addEventListener(
         }
 
 
-        if (
-            file.size >
-            5 * 1024 * 1024
-        ) {
+        if (file.size > 5 * 1024 * 1024) {
 
             productMessage.textContent =
                 "Image must be less than 5 MB.";
@@ -925,131 +941,12 @@ productImage.addEventListener(
 
 
 /* =========================================
-   CHECK USER
-========================================= */
-
-async function checkUser() {
-
-    const {
-        data: { user }
-    } =
-        await supabaseClient.auth.getUser();
-
-
-    if (user) {
-
-        loginBox.style.display =
-            "none";
-
-        dashboard.style.display =
-            "block";
-
-        loadAdminProducts();
-
-    } else {
-
-        loginBox.style.display =
-            "block";
-
-        dashboard.style.display =
-            "none";
-
-    }
-
-}
-
-
-/* =========================================
-   LOGIN
-========================================= */
-
-loginBtn.addEventListener(
-    "click",
-    async () => {
-
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim();
-
-
-        const password =
-            document
-                .getElementById("password")
-                .value;
-
-
-        if (!email || !password) {
-
-            loginMessage.textContent =
-                "Please enter email and password.";
-
-            return;
-        }
-
-
-        loginMessage.textContent =
-            "Logging in...";
-
-
-        const {
-            error
-        } =
-            await supabaseClient.auth
-                .signInWithPassword({
-
-                    email: email,
-
-                    password: password
-
-                });
-
-
-        if (error) {
-
-            loginMessage.textContent =
-                error.message;
-
-            return;
-        }
-
-
-        loginMessage.textContent =
-            "Login successful!";
-
-
-        checkUser();
-
-    }
-);
-
-
-/* =========================================
-   LOGOUT
-========================================= */
-
-logoutBtn.addEventListener(
-    "click",
-    async () => {
-
-        await supabaseClient.auth.signOut();
-
-        resetEditMode();
-
-        checkUser();
-
-    }
-);
-
-
-/* =========================================
-   ADD / UPDATE PRODUCT
+   ADD / UPDATE BUTTON
 ========================================= */
 
 addProductBtn.addEventListener(
     "click",
-    async () => {
+    async function() {
 
         const name =
             document
@@ -1058,12 +955,14 @@ addProductBtn.addEventListener(
                 .trim();
 
 
+        const priceValue =
+            document
+                .getElementById("productPrice")
+                .value;
+
+
         const price =
-            Number(
-                document
-                    .getElementById("productPrice")
-                    .value
-            );
+            Number(priceValue);
 
 
         const category =
@@ -1087,15 +986,111 @@ addProductBtn.addEventListener(
                 .trim();
 
 
+        const stockValue =
+            document
+                .getElementById("productStock")
+                .value;
+
+
         const stock =
-            Number(
-                document
-                    .getElementById("productStock")
-                    .value
-            );
+            Number(stockValue);
 
 
         const description =
             document
                 .getElementById("productDescription")
-        
+                .value
+                .trim();
+
+
+        const file =
+            productImage.files[0];
+
+
+        if (!name) {
+
+            productMessage.textContent =
+                "Please enter product name.";
+
+            return;
+        }
+
+
+        if (
+            priceValue === "" ||
+            isNaN(price) ||
+            price < 0
+        ) {
+
+            productMessage.textContent =
+                "Please enter a valid price.";
+
+            return;
+        }
+
+
+        if (
+            stockValue === "" ||
+            isNaN(stock) ||
+            stock < 0
+        ) {
+
+            productMessage.textContent =
+                "Please enter a valid stock.";
+
+            return;
+        }
+
+
+        /* EDIT */
+
+        if (editingProductId !== null) {
+
+            await updateProduct({
+
+                name,
+                price,
+                category,
+                sizes,
+                colors,
+                stock,
+                description,
+                file
+
+            });
+
+            return;
+        }
+
+
+        /* ADD */
+
+        if (!file) {
+
+            productMessage.textContent =
+                "Please choose a product image.";
+
+            return;
+        }
+
+
+        await addNewProduct({
+
+            name,
+            price,
+            category,
+            sizes,
+            colors,
+            stock,
+            description,
+            file
+
+        });
+
+    }
+);
+
+
+/* =========================================
+   ADD NEW PRODUCT
+========================
