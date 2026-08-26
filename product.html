@@ -1,179 +1,956 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Product | Lory X 1010</title>
 
-    <meta name="description"
-          content="View product details at Lory X 1010.">
+    <meta
+        name="description"
+        content="View product details and order from Lory X 1010.">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css">
+
 
     <style>
-        .product-details {
-            padding: 70px 0;
+
+        /* =========================
+           PRODUCT DETAIL PAGE
+        ========================= */
+
+        .product-detail-section {
+            padding: 60px 0 100px;
         }
+
+
+        .back-link {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 35px;
+
+            color: #666;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+        .back-link:hover {
+            color: #111;
+        }
+
 
         .product-detail-grid {
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                minmax(0, 1.05fr)
+                minmax(0, .95fr);
+
             gap: 60px;
+
             align-items: start;
+
         }
 
+
+        /* =========================
+           IMAGE
+        ========================= */
+
         .detail-image {
+
             width: 100%;
+
             aspect-ratio: 1 / 1;
-            background: #f5f5f5;
-            border-radius: 12px;
+
             overflow: hidden;
+
+            background: #f5f5f5;
+
+            border-radius: 12px;
+
+            border: 1px solid #eeeeee;
+
         }
 
         .detail-image img {
+
             width: 100%;
             height: 100%;
+
             object-fit: cover;
+
         }
 
+
+        /* =========================
+           INFO
+        ========================= */
+
+        .detail-info {
+            padding-top: 5px;
+        }
+
+
         .detail-category {
-            font-size: 12px;
-            letter-spacing: 2px;
+
+            display: inline-block;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
             text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            color: #666;
+
+            margin-bottom: 13px;
+
+        }
+
+
+        .detail-title {
+
+            font-size:
+                clamp(34px, 5vw, 58px);
+
+            line-height: 1.05;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .detail-price {
+
+            font-size: 28px;
+
+            font-weight: 900;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .detail-description {
+
+            color: #555;
+
+            line-height: 1.8;
+
+            margin-bottom: 28px;
+
+            white-space: pre-line;
+
+        }
+
+
+        /* =========================
+           PRODUCT META
+        ========================= */
+
+        .product-meta {
+
+            border-top: 1px solid #eeeeee;
+
+            border-bottom: 1px solid #eeeeee;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .meta-row {
+
+            display: flex;
+
+            gap: 15px;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid #eeeeee;
+
+        }
+
+        .meta-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .meta-label {
+
+            width: 90px;
+
+            flex-shrink: 0;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .meta-value {
+
+            color: #666;
+
+            font-size: 13px;
+
+        }
+
+
+        .stock {
+
+            font-weight: 700;
+
+        }
+
+        .stock.in-stock {
+            color: #188038;
+        }
+
+        .stock.out-stock {
+            color: #c5221f;
+        }
+
+
+        /* =========================
+           ORDER AREA
+        ========================= */
+
+        .order-area {
+
+            padding: 22px;
+
+            background: #f7f7f7;
+
+            border-radius: 10px;
+
+        }
+
+
+        .order-label {
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .quantity-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .quantity-row label {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+        }
+
+
+        .quantity-input {
+
+            width: 75px;
+
+            height: 42px;
+
+            border: 1px solid #dddddd;
+
+            border-radius: 6px;
+
+            background: #ffffff;
+
+            padding: 0 10px;
+
+            outline: none;
+
+        }
+
+
+        .quantity-input:focus {
+            border-color: #111111;
+        }
+
+
+        .whatsapp-order-btn {
+
+            width: 100%;
+
+            min-height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            border-radius: 7px;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            font-size: 15px;
+
+            transition: .25s;
+
+        }
+
+
+        .whatsapp-order-btn:hover {
+
+            background: #333333;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .whatsapp-order-btn.disabled {
+
+            background: #999999;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+        }
+
+
+        .order-note {
+
             color: #777;
+
+            font-size: 11px;
+
+            text-align: center;
+
+            margin-top: 10px;
+
+        }
+
+
+        /* =========================
+           NOT FOUND
+        ========================= */
+
+        .product-not-found {
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 90px 20px;
+
+        }
+
+        .product-not-found h2 {
             margin-bottom: 10px;
         }
 
-        .detail-title {
-            font-size: clamp(32px, 5vw, 55px);
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
+        .product-not-found p {
+            color: #666;
 
-        .detail-price {
-            font-size: 28px;
-            font-weight: 800;
             margin-bottom: 25px;
         }
 
-        .detail-description {
-            color: #555;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
 
-        .buy-button {
-            display: inline-block;
-            background: #111;
-            color: #fff;
-            padding: 15px 30px;
-            border-radius: 6px;
-            font-weight: 700;
-        }
+        /* =========================
+           MOBILE
+        ========================= */
 
-        .back-link {
-            display: inline-block;
-            margin-bottom: 30px;
-            color: #555;
-        }
+        @media (max-width: 800px) {
 
-        @media (max-width: 700px) {
             .product-detail-grid {
+
                 grid-template-columns: 1fr;
+
                 gap: 35px;
+
             }
 
-            .product-details {
-                padding: 45px 0;
+            .product-detail-section {
+                padding: 40px 0 70px;
             }
+
+            .detail-title {
+                font-size: 38px;
+            }
+
         }
+
+
+        @media (max-width: 500px) {
+
+            .detail-title {
+                font-size: 34px;
+
+                letter-spacing: -1px;
+            }
+
+            .detail-price {
+                font-size: 25px;
+            }
+
+        }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="header">
 
     <div class="container navbar">
 
-        <a href="index.html" class="logo">
+
+        <a href="index.html"
+           class="logo">
+
             Lory X <span>1010</span>
+
         </a>
+
 
         <nav class="nav">
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
         </nav>
 
-        <a href="products.html" class="shop-btn">
+
+        <a href="products.html"
+           class="header-btn">
+
             Shop Now
+
         </a>
+
 
     </div>
 
 </header>
 
 
+
+<!-- =========================
+     PRODUCT
+========================= -->
+
 <main>
 
-    <section class="product-details">
+<section class="product-detail-section">
 
-        <div class="container">
+    <div class="container">
 
-            <a href="products.html" class="back-link">
-                ← Back to Products
-            </a>
 
-            <div id="product-detail"
-                 class="product-detail-grid">
+        <a
+            href="products.html"
+            class="back-link">
 
-                <!-- Product will be loaded by JavaScript -->
+            ← Back to Products
+
+        </a>
+
+
+        <div
+            id="product-detail"
+            class="product-detail-grid">
+
+
+            <!--
+                Product information will be
+                loaded from Supabase by script.js.
+            -->
+
+
+            <div class="loading">
+
+                <div class="loading-spinner"></div>
+
+                <p>
+                    Loading product...
+                </p>
 
             </div>
 
+
         </div>
 
-    </section>
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     WHATSAPP CTA
+========================= -->
+
+<section class="whatsapp-section">
+
+    <div class="container">
+
+        <div class="whatsapp-box">
+
+            <div>
+
+                <p class="whatsapp-label">
+                    LORY X 1010
+                </p>
+
+                <h2>
+                    Need help with your order?
+                </h2>
+
+                <p>
+                    Contact us through WhatsApp.
+                </p>
+
+            </div>
+
+
+            <a
+                href="https://wa.me/8801XXXXXXXXX"
+                class="whatsapp-large-btn"
+                target="_blank"
+                rel="noopener">
+
+                💬 Chat on WhatsApp
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
 
 </main>
 
+
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer class="footer">
 
     <div class="container footer-content">
 
-        <div>
-            <h2>Lory X 1010</h2>
+
+        <div class="footer-brand">
+
+            <h2>
+                Lory X 1010
+            </h2>
 
             <p>
                 Quality products for better shopping.
             </p>
-        </div>
-
-        <div>
-
-            <h3>Quick Links</h3>
-
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
 
         </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                Contact
+            </h3>
+
+            <a
+                href="https://wa.me/8801XXXXXXXXX"
+                target="_blank"
+                rel="noopener">
+
+                WhatsApp
+
+            </a>
+
+        </div>
+
 
     </div>
 
+
     <div class="copyright">
-        © 2026 Lory X 1010. All rights reserved.
+
+        © 2026 Lory X 1010.
+        All rights reserved.
+
     </div>
 
 </footer>
 
 
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="js/script.js"></script>
 
+
+<!-- =========================
+     WHATSAPP ORDER SYSTEM
+========================= -->
+
+<script>
+
+    /*
+       =========================================
+       LORY X 1010
+       WhatsApp Order System
+       =========================================
+
+       Replace this number with your WhatsApp
+       business/ordering number.
+
+       Example:
+       01712345678
+
+       becomes:
+
+       8801712345678
+    */
+
+    const WHATSAPP_NUMBER =
+        "8801XXXXXXXXX";
+
+
+    /*
+       Wait until product information
+       has been loaded by script.js.
+    */
+
+    const productObserver =
+        new MutationObserver(() => {
+
+            const productContainer =
+                document.getElementById(
+                    "product-detail"
+                );
+
+
+            if (!productContainer) {
+                return;
+            }
+
+
+            const productTitle =
+                productContainer.querySelector(
+                    ".detail-title"
+                );
+
+
+            const productPrice =
+                productContainer.querySelector(
+                    ".detail-price"
+                );
+
+
+            if (!productTitle ||
+                !productPrice) {
+
+                return;
+            }
+
+
+            /*
+               Avoid creating the button
+               multiple times.
+            */
+
+            if (
+                productContainer.querySelector(
+                    ".whatsapp-order-btn"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+               Create order area.
+            */
+
+            const orderArea =
+                document.createElement("div");
+
+            orderArea.className =
+                "order-area";
+
+
+            orderArea.innerHTML = `
+
+                <div class="order-label">
+                    ORDER THIS PRODUCT
+                </div>
+
+                <div class="quantity-row">
+
+                    <label for="order-quantity">
+                        Quantity
+                    </label>
+
+                    <input
+                        id="order-quantity"
+                        class="quantity-input"
+                        type="number"
+                        min="1"
+                        value="1"
+                    >
+
+                </div>
+
+                <button
+                    type="button"
+                    class="whatsapp-order-btn">
+
+                    💬 Order on WhatsApp
+
+                </button>
+
+                <p class="order-note">
+                    Your order details will be prepared
+                    automatically in WhatsApp.
+                </p>
+
+            `;
+
+
+            /*
+               Add order area to product info.
+            */
+
+            const info =
+                productTitle.parentElement;
+
+            info.appendChild(orderArea);
+
+
+            /*
+               WhatsApp button.
+            */
+
+            const orderButton =
+                orderArea.querySelector(
+                    ".whatsapp-order-btn"
+                );
+
+
+            orderButton.addEventListener(
+                "click",
+                () => {
+
+                    const quantity =
+                        Math.max(
+                            1,
+                            Number(
+                                document.getElementById(
+                                    "order-quantity"
+                                ).value
+                            ) || 1
+                        );
+
+
+                    const title =
+                        productTitle
+                            .textContent
+                            .trim();
+
+
+                    const price =
+                        productPrice
+                            .textContent
+                            .trim();
+
+
+                    const params =
+                        new URLSearchParams(
+                            window.location.search
+                        );
+
+
+                    const productId =
+                        params.get("id") || "";
+
+
+                    const message =
+
+`Hello Lory X 1010,
+
+I want to order this product.
+
+Product: ${title}
+Product ID: ${productId}
+Price: ${price}
+Quantity: ${quantity}
+
+Please confirm my order.
+
+Thank you.`;
+
+
+                    const whatsappURL =
+                        "https://wa.me/" +
+                        WHATSAPP_NUMBER +
+                        "?text=" +
+                        encodeURIComponent(
+                            message
+                        );
+
+
+                    window.open(
+                        whatsappURL,
+                        "_blank"
+                    );
+
+                }
+            );
+
+
+            /*
+               Stock check.
+            */
+
+            const stockElement =
+                productContainer.querySelector(
+                    ".stock"
+                );
+
+
+            if (
+                stockElement &&
+                stockElement.classList.contains(
+                    "out-stock"
+                )
+            ) {
+
+                orderButton.disabled = true;
+
+                orderButton.classList.add(
+                    "disabled"
+                );
+
+                orderButton.textContent =
+                    "Out of Stock";
+
+            }
+
+        });
+
+
+    productObserver.observe(
+
+        document.getElementById(
+            "product-detail"
+        ),
+
+        {
+            childList: true,
+            subtree: true
+        }
+
+    );
+
+</script>
+
+
 </body>
+
 </html>
