@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,255 +8,530 @@
     <title>Products | Lory X 1010</title>
 
     <meta name="description"
-          content="Explore all products from Lory X 1010.">
+          content="Explore quality products from Lory X 1010.">
 
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =========================
+           PRODUCTS PAGE
+        ========================= */
+
+        .products-hero {
+            padding: 75px 0 55px;
+            background: #f7f7f7;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .products-hero-content {
+            max-width: 750px;
+        }
+
+        .products-hero-label {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .products-hero h1 {
+            font-size: clamp(42px, 7vw, 70px);
+            line-height: 1;
+            letter-spacing: -3px;
+            margin-bottom: 18px;
+        }
+
+        .products-hero p {
+            color: #666;
+            max-width: 600px;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .products-tools {
+            padding: 35px 0 10px;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 52px;
+            padding: 0 20px;
+
+            border: 1px solid #dddddd;
+            border-radius: 7px;
+
+            background: #ffffff;
+            color: #111111;
+
+            outline: none;
+            font-size: 15px;
+
+            transition: .2s;
+        }
+
+        .search-box input:focus {
+            border-color: #111111;
+        }
+
+
+        /* =========================
+           FILTERS
+        ========================= */
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            padding: 20px 0 35px;
+        }
+
+        .filter-btn {
+            border: 1px solid #dddddd;
+
+            background: #ffffff;
+            color: #111111;
+
+            padding: 9px 17px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .filter-btn:hover {
+            border-color: #111111;
+        }
+
+        .filter-btn.active {
+            background: #111111;
+            color: #ffffff;
+            border-color: #111111;
+        }
+
+
+        /* =========================
+           PRODUCTS
+        ========================= */
+
+        .products-section {
+            padding: 20px 0 90px;
+        }
+
+        #all-products {
+            min-height: 250px;
+        }
+
+        .products-status {
+            text-align: center;
+            color: #666;
+            padding: 50px 20px;
+        }
+
+        .no-products {
+            display: none;
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 70px 20px;
+        }
+
+        .no-products h2 {
+            margin-bottom: 10px;
+        }
+
+        .no-products p {
+            color: #666;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .products-hero {
+                padding: 55px 0 40px;
+            }
+
+            .products-hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .products-section {
+                padding-bottom: 60px;
+            }
+
+            .filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+
+                padding-left: 5%;
+                padding-right: 5%;
+
+                scrollbar-width: none;
+            }
+
+            .filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter-btn {
+                white-space: nowrap;
+            }
+
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-    <!-- Header -->
-    <header class="header">
 
-        <div class="container navbar">
+<!-- =========================
+     HEADER
+========================= -->
 
-            <a href="index.html" class="logo">
-                Lory X <span>1010</span>
+<header class="header">
+
+    <div class="container navbar">
+
+        <a href="index.html" class="logo">
+            Lory X <span>1010</span>
+        </a>
+
+
+        <nav class="nav">
+
+            <a href="index.html">
+                Home
             </a>
 
-            <nav class="nav">
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
-            </nav>
-
-            <a href="products.html" class="shop-btn">
-                Shop Now
+            <a href="products.html">
+                Products
             </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <a href="products.html"
+           class="header-btn">
+
+            Shop Now
+
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =========================
+     PAGE HERO
+========================= -->
+
+<section class="products-hero">
+
+    <div class="container">
+
+        <div class="products-hero-content">
+
+            <p class="products-hero-label">
+                LORY X 1010 COLLECTION
+            </p>
+
+            <h1>
+                Explore Products.
+            </h1>
+
+            <p>
+                Discover our collection of quality products
+                and find something that's right for you.
+            </p>
 
         </div>
 
-    </header>
+    </div>
+
+</section>
 
 
-    <!-- Products Page -->
-    <main>
 
-        <!-- Page Hero -->
-        <section class="hero" style="min-height: 350px;">
+<!-- =========================
+     SEARCH
+========================= -->
 
-            <div class="container hero-content">
+<section class="products-tools">
 
-                <div class="hero-text">
+    <div class="container">
 
-                    <p class="small-title">
-                        LORY X 1010
-                    </p>
+        <div class="search-box">
 
-                    <h1 style="font-size: clamp(45px, 7vw, 75px);">
-                        Our Products
-                    </h1>
+            <input
+                type="search"
+                id="product-search"
+                placeholder="Search products..."
+                autocomplete="off"
+            >
 
-                    <p>
-                        Explore our latest collection of
-                        quality products.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
+        </div>
 
 
-        <!-- Product Section -->
-        <section class="featured">
+        <!-- FILTER BUTTONS -->
 
-            <div class="container">
+        <div class="filters">
 
-                <!-- Search -->
-                <div style="
-                    max-width: 600px;
-                    margin: 0 auto 30px;
-                ">
+            <button
+                class="filter-btn active"
+                data-category="all">
+                All
+            </button>
 
-                    <input
-                        type="search"
-                        id="product-search"
-                        placeholder="Search products..."
-                        style="
-                            width: 100%;
-                            padding: 15px 18px;
-                            border: 1px solid #dddddd;
-                            border-radius: 6px;
-                            font-size: 16px;
-                            outline: none;
-                        "
-                    >
+            <button
+                class="filter-btn"
+                data-category="Fashion">
+                Fashion
+            </button>
 
-                </div>
+            <button
+                class="filter-btn"
+                data-category="Gadget">
+                Gadgets
+            </button>
 
+            <button
+                class="filter-btn"
+                data-category="Home">
+                Home
+            </button>
 
-                <!-- Categories -->
-                <div style="
-                    display: flex;
-                    justify-content: center;
-                    flex-wrap: wrap;
-                    gap: 10px;
-                    margin-bottom: 45px;
-                ">
+            <button
+                class="filter-btn"
+                data-category="Others">
+                Others
+            </button>
 
-                    <button
-                        class="filter-btn active"
-                        data-category="all"
-                        style="
-                            padding: 10px 20px;
-                            border: 1px solid #111111;
-                            background: #111111;
-                            color: #ffffff;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        "
-                    >
-                        All
-                    </button>
+        </div>
 
-                    <button
-                        class="filter-btn"
-                        data-category="Fashion"
-                        style="
-                            padding: 10px 20px;
-                            border: 1px solid #111111;
-                            background: #ffffff;
-                            color: #111111;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        "
-                    >
-                        Fashion
-                    </button>
+    </div>
 
-                    <button
-                        class="filter-btn"
-                        data-category="Gadgets"
-                        style="
-                            padding: 10px 20px;
-                            border: 1px solid #111111;
-                            background: #ffffff;
-                            color: #111111;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        "
-                    >
-                        Gadgets
-                    </button>
-
-                    <button
-                        class="filter-btn"
-                        data-category="Home"
-                        style="
-                            padding: 10px 20px;
-                            border: 1px solid #111111;
-                            background: #ffffff;
-                            color: #111111;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        "
-                    >
-                        Home
-                    </button>
-
-                    <button
-                        class="filter-btn"
-                        data-category="Others"
-                        style="
-                            padding: 10px 20px;
-                            border: 1px solid #111111;
-                            background: #ffffff;
-                            color: #111111;
-                            border-radius: 5px;
-                            cursor: pointer;
-                        "
-                    >
-                        Others
-                    </button>
-
-                </div>
+</section>
 
 
-                <!-- Products -->
-                <div
-                    id="all-products"
-                    class="product-grid"
-                >
 
-                    <!-- Products will appear here -->
+<!-- =========================
+     PRODUCT LIST
+========================= -->
 
-                </div>
+<section class="products-section">
 
+    <div class="container">
 
-                <!-- Empty Result -->
-                <div
-                    id="no-products"
-                    style="
-                        display: none;
-                        text-align: center;
-                        padding: 60px 20px;
-                    "
-                >
+        <div
+            id="all-products"
+            class="product-grid">
 
-                    <h3>No products found</h3>
+            <div class="loading">
 
-                    <p style="color: #666;">
-                        Try another search or category.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-
-        <div class="container footer-content">
-
-            <div>
-
-                <h2>Lory X 1010</h2>
+                <div class="loading-spinner"></div>
 
                 <p>
-                    Quality products for better shopping.
+                    Loading products...
                 </p>
 
             </div>
 
+        </div>
+
+
+        <div
+            id="no-products"
+            class="no-products">
+
+            <h2>
+                No Products Found
+            </h2>
+
+            <p>
+                Try another search or category.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     WHATSAPP CTA
+========================= -->
+
+<section class="whatsapp-section">
+
+    <div class="container">
+
+        <div class="whatsapp-box">
+
             <div>
 
-                <h3>Quick Links</h3>
+                <p class="whatsapp-label">
+                    NEED HELP?
+                </p>
 
-                <a href="index.html">Home</a>
-                <a href="products.html">Products</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <h2>
+                    Can't find what you need?
+                </h2>
+
+                <p>
+                    Contact us directly through WhatsApp.
+                </p>
 
             </div>
 
+
+            <a
+                href="https://wa.me/8801XXXXXXXXX"
+                class="whatsapp-large-btn"
+                target="_blank"
+                rel="noopener">
+
+                💬 Chat on WhatsApp
+
+            </a>
+
         </div>
 
-        <div class="copyright">
-            © 2026 Lory X 1010. All rights reserved.
+    </div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="container footer-content">
+
+
+        <div class="footer-brand">
+
+            <h2>
+                Lory X 1010
+            </h2>
+
+            <p>
+                Quality products for better shopping.
+            </p>
+
         </div>
 
-    </footer>
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+        </div>
 
 
-    <script src="js/script.js"></script>
+        <div class="footer-links">
+
+            <h3>
+                Contact
+            </h3>
+
+            <a
+                href="https://wa.me/8801XXXXXXXXX"
+                target="_blank"
+                rel="noopener">
+
+                WhatsApp
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © 2026 Lory X 1010.
+        All rights reserved.
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/script.js"></script>
 
 </body>
+
 </html>
