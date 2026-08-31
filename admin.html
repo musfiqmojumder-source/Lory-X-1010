@@ -1,334 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Lory X 1010</title>
 
-    <title>Admin | Lory X 1010</title>
+    <meta name="robots" content="noindex, nofollow">
 
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        .admin-section {
-            padding: 50px 0;
-            min-height: 75vh;
-        }
-
-        .admin-box {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 30px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            background: #fff;
-        }
-
-        .admin-box h1 {
-            margin-bottom: 25px;
-        }
-
-        .admin-input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-            background: #fff;
-            color: #111;
-        }
-
-        textarea.admin-input {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .admin-button {
-            width: 100%;
-            padding: 14px;
-            background: #111;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .admin-button:disabled {
-            opacity: .6;
-            cursor: not-allowed;
-        }
-
-        .message {
-            margin-top: 15px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .error {
-            color: #b00000;
-        }
-
-        .success {
-            color: #187a18;
-        }
-
-        .dashboard {
-            display: none;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 35px;
-        }
-
-        .logout-button,
-        .refresh-button {
-            padding: 10px 18px;
-            border: 1px solid #111;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            background: #fff;
-            color: #111;
-        }
-
-        .logout-button {
-            background: #111;
-            color: #fff;
-        }
-
-        .product-form {
-            padding: 25px;
-            border: 1px solid #ddd;
-            border-radius: 12px;
-            background: #fff;
-            margin-bottom: 45px;
-        }
-
-        .product-form h2 {
-            margin-bottom: 20px;
-        }
-
-        .file-label {
-            display: block;
-            padding: 15px;
-            border: 1px dashed #999;
-            border-radius: 6px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 15px;
-            background: #fafafa;
-        }
-
-        #productImage {
-            display: none;
-        }
-
-        .image-preview {
-            display: none;
-            width: 180px;
-            height: 180px;
-            margin: 10px 0 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #f5f5f5;
-        }
-
-        .image-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .cancel-button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 10px;
-            border: 1px solid #111;
-            border-radius: 6px;
-            background: #fff;
-            cursor: pointer;
-            font-weight: 700;
-            display: none;
-        }
-
-        .manage-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .product-list {
-            display: grid;
-            gap: 15px;
-        }
-
-        .admin-product {
-            display: grid;
-            grid-template-columns: 100px 1fr auto;
-            gap: 20px;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-        }
-
-        .admin-product-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #f5f5f5;
-        }
-
-        .admin-product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .admin-product-info h3 {
-            margin-bottom: 7px;
-        }
-
-        .admin-product-info p {
-            margin: 4px 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 5px 9px;
-            margin-top: 7px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .published {
-            background: #e8f7e8;
-            color: #187a18;
-        }
-
-        .hidden {
-            background: #f5eaea;
-            color: #a00000;
-        }
-
-        .actions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 130px;
-        }
-
-        .action {
-            padding: 9px 12px;
-            border-radius: 5px;
-            border: 1px solid #111;
-            background: #fff;
-            color: #111;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .action:hover {
-            opacity: .85;
-        }
-
-        .delete {
-            color: #b00000;
-            border-color: #b00000;
-        }
-
-        .empty {
-            padding: 50px 20px;
-            text-align: center;
-            border: 1px dashed #ccc;
-            border-radius: 10px;
-            color: #666;
-        }
-
-        @media (max-width: 700px) {
-
-            .admin-section {
-                padding: 35px 0;
-            }
-
-            .dashboard-header {
-                align-items: flex-start;
-            }
-
-            .admin-product {
-                grid-template-columns: 80px 1fr;
-            }
-
-            .admin-product-image {
-                width: 80px;
-                height: 80px;
-            }
-
-            .actions {
-                grid-column: 1 / -1;
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-
-            .action {
-                flex: 1;
-                min-width: 100px;
-            }
-
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="css/admin.css">
 </head>
-
 
 <body>
 
+<!-- =========================================
+     HEADER
+========================================= -->
 
-<header class="header">
+<header class="header admin-header">
 
-    <div class="container navbar">
+    <div class="container admin-navbar">
 
         <a href="index.html" class="logo">
             Lory X <span>1010</span>
         </a>
 
-        <nav class="nav">
-
-            <a href="index.html">
-                Home
-            </a>
-
-            <a href="products.html">
-                Products
-            </a>
-
-        </nav>
+        <a href="index.html" class="back-home">
+            ← Store
+        </a>
 
     </div>
 
@@ -337,7 +37,7 @@
 
 <main>
 
-<section class="admin-section">
+<section class="admin-page">
 
 <div class="container">
 
@@ -346,37 +46,89 @@
      LOGIN
 ========================================= -->
 
-<div id="loginBox" class="admin-box">
+<div id="loginSection" class="login-card">
 
-    <h1>Admin Login</h1>
+    <div class="login-icon">
+        LX
+    </div>
 
-    <input
-        type="email"
-        id="email"
-        class="admin-input"
-        placeholder="Admin Email"
-        autocomplete="email"
-    >
-
-    <input
-        type="password"
-        id="password"
-        class="admin-input"
-        placeholder="Password"
-        autocomplete="current-password"
-    >
-
-    <button
-        id="loginBtn"
-        class="admin-button"
-        type="button"
-    >
-        Login
-    </button>
-
-    <p id="loginMessage"
-       class="message">
+    <p class="admin-label">
+        LORY X 1010
     </p>
+
+    <h1>
+        Admin Login
+    </h1>
+
+    <p class="login-subtitle">
+        Sign in to manage your products.
+    </p>
+
+
+    <form id="loginForm">
+
+        <div class="field">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter admin email"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label for="password">
+                Password
+            </label>
+
+            <div class="password-wrap">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    id="togglePassword"
+                    class="password-toggle"
+                    aria-label="Show password"
+                >
+                    Show
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="submit"
+            id="loginButton"
+            class="admin-primary-button"
+        >
+            Login
+        </button>
+
+
+        <div
+            id="loginMessage"
+            class="admin-message"
+        ></div>
+
+    </form>
 
 </div>
 
@@ -385,26 +137,38 @@
      DASHBOARD
 ========================================= -->
 
-<div id="dashboard"
-     class="dashboard">
+<div
+    id="dashboardSection"
+    class="dashboard"
+    hidden
+>
 
 
-    <div class="dashboard-header">
+    <!-- Dashboard Top -->
+
+    <div class="dashboard-top">
 
         <div>
 
-            <h1>Admin Dashboard</h1>
+            <p class="admin-label">
+                ADMIN PANEL
+            </p>
 
-            <p>
-                Lory X 1010
+            <h1>
+                Dashboard
+            </h1>
+
+            <p id="adminEmailText">
+                Welcome back.
             </p>
 
         </div>
 
+
         <button
-            id="logoutBtn"
-            class="logout-button"
             type="button"
+            id="logoutButton"
+            class="logout-button"
         >
             Logout
         </button>
@@ -413,124 +177,346 @@
 
 
     <!-- =====================================
-         ADD PRODUCT
+         STATS
     ====================================== -->
 
-    <div class="product-form">
+    <div class="stats-grid">
 
-        <h2 id="formTitle">
-            Add Product
-        </h2>
+        <div class="stat-card">
 
+            <span>
+                Total Products
+            </span>
 
-        <input
-            type="text"
-            id="productName"
-            class="admin-input"
-            placeholder="Product Name"
-        >
-
-
-        <input
-            type="number"
-            id="productPrice"
-            class="admin-input"
-            placeholder="Price"
-            min="0"
-            step="0.01"
-        >
-
-
-        <input
-            type="text"
-            id="productCategory"
-            class="admin-input"
-            placeholder="Category e.g. Fashion"
-        >
-
-
-        <label
-            for="productImage"
-            class="file-label"
-        >
-            📷 Choose Product Image
-        </label>
-
-
-        <input
-            type="file"
-            id="productImage"
-            accept="image/*"
-        >
-
-
-        <div id="imagePreview"
-             class="image-preview">
-
-            <img
-                id="previewImg"
-                src=""
-                alt="Product Preview"
-            >
+            <strong id="totalProducts">
+                0
+            </strong>
 
         </div>
 
 
-        <input
-            type="text"
-            id="productSizes"
-            class="admin-input"
-            placeholder="Sizes e.g. M, L, XL, XXL"
-        >
+        <div class="stat-card">
+
+            <span>
+                Published
+            </span>
+
+            <strong id="publishedProducts">
+                0
+            </strong>
+
+        </div>
 
 
-        <input
-            type="text"
-            id="productColors"
-            class="admin-input"
-            placeholder="Colors e.g. Black, White"
-        >
+        <div class="stat-card">
+
+            <span>
+                Hidden
+            </span>
+
+            <strong id="hiddenProducts">
+                0
+            </strong>
+
+        </div>
+
+    </div>
 
 
-        <input
-            type="number"
-            id="productStock"
-            class="admin-input"
-            placeholder="Stock"
-            value="0"
-            min="0"
-        >
+    <!-- =====================================
+         PRODUCT FORM
+    ====================================== -->
+
+    <div class="admin-panel">
+
+        <div class="panel-heading">
+
+            <div>
+
+                <p class="admin-label">
+                    PRODUCT
+                </p>
+
+                <h2 id="formTitle">
+                    Add New Product
+                </h2>
+
+            </div>
+
+        </div>
 
 
-        <textarea
-            id="productDescription"
-            class="admin-input"
-            placeholder="Product Description"
-        ></textarea>
+        <form id="productForm">
 
 
-        <button
-            id="saveProductBtn"
-            class="admin-button"
-            type="button"
-        >
-            Add Product
-        </button>
+            <!-- Product Name -->
+
+            <div class="field">
+
+                <label for="productName">
+                    Product Name *
+                </label>
+
+                <input
+                    type="text"
+                    id="productName"
+                    placeholder="e.g. Premium Cotton T-Shirt"
+                    required
+                >
+
+            </div>
 
 
-        <button
-            id="cancelEditBtn"
-            class="cancel-button"
-            type="button"
-        >
-            Cancel Edit
-        </button>
+            <!-- Price + Stock -->
+
+            <div class="two-column">
+
+                <div class="field">
+
+                    <label for="productPrice">
+                        Price (৳) *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="850"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
 
 
-        <p
-            id="productMessage"
-            class="message"
-        ></p>
+                <div class="field">
+
+                    <label for="productStock">
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="10"
+                        value="0"
+                        min="0"
+                        step="1"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- Category -->
+
+            <div class="field">
+
+                <label for="productCategory">
+                    Category *
+                </label>
+
+                <select
+                    id="productCategory"
+                    required
+                >
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option value="Fashion">
+                        Fashion
+                    </option>
+
+                    <option value="Gadget">
+                        Gadget
+                    </option>
+
+                    <option value="Home">
+                        Home
+                    </option>
+
+                    <option value="Others">
+                        Others
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Image -->
+
+            <div class="field">
+
+                <label>
+                    Product Image
+                </label>
+
+                <label
+                    for="productImage"
+                    class="upload-box"
+                >
+
+                    <span class="upload-icon">
+                        +
+                    </span>
+
+                    <strong>
+                        Choose Product Image
+                    </strong>
+
+                    <small>
+                        JPG, PNG or WEBP · Maximum 5 MB
+                    </small>
+
+                </label>
+
+                <input
+                    type="file"
+                    id="productImage"
+                    accept="image/jpeg,image/png,image/webp"
+                    hidden
+                >
+
+            </div>
+
+
+            <!-- Image Preview -->
+
+            <div
+                id="imagePreviewBox"
+                class="image-preview-box"
+                hidden
+            >
+
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Product preview"
+                >
+
+                <button
+                    type="button"
+                    id="removeImageButton"
+                    class="remove-image"
+                >
+                    Remove Image
+                </button>
+
+            </div>
+
+
+            <!-- Sizes -->
+
+            <div class="field">
+
+                <label for="productSizes">
+                    Sizes
+                </label>
+
+                <input
+                    type="text"
+                    id="productSizes"
+                    placeholder="M, L, XL, XXL"
+                >
+
+            </div>
+
+
+            <!-- Colors -->
+
+            <div class="field">
+
+                <label for="productColors">
+                    Colors
+                </label>
+
+                <input
+                    type="text"
+                    id="productColors"
+                    placeholder="Black, White, Navy"
+                >
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="field">
+
+                <label for="productDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="productDescription"
+                    placeholder="Write product description..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- Publish -->
+
+            <label class="publish-toggle">
+
+                <input
+                    type="checkbox"
+                    id="productPublished"
+                    checked
+                >
+
+                <span class="toggle-ui"></span>
+
+                <span>
+
+                    <strong>
+                        Publish Product
+                    </strong>
+
+                    <small>
+                        Published products will appear on the store.
+                    </small>
+
+                </span>
+
+            </label>
+
+
+            <!-- Buttons -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    id="saveProductButton"
+                    class="admin-primary-button"
+                >
+                    Add Product
+                </button>
+
+
+                <button
+                    type="button"
+                    id="cancelEditButton"
+                    class="cancel-button"
+                    hidden
+                >
+                    Cancel Edit
+                </button>
+
+            </div>
+
+
+            <div
+                id="productMessage"
+                class="admin-message"
+            ></div>
+
+        </form>
 
     </div>
 
@@ -539,28 +525,29 @@
          MANAGE PRODUCTS
     ====================================== -->
 
-    <div>
+    <div class="admin-panel manage-panel">
 
-        <div class="manage-header">
+        <div class="manage-heading">
 
             <div>
+
+                <p class="admin-label">
+                    INVENTORY
+                </p>
 
                 <h2>
                     Manage Products
                 </h2>
 
-                <p>
-                    Edit, publish, hide or delete products.
-                </p>
-
             </div>
 
+
             <button
-                id="refreshBtn"
-                class="refresh-button"
                 type="button"
+                id="refreshButton"
+                class="refresh-button"
             >
-                🔄 Refresh
+                ↻ Refresh
             </button>
 
         </div>
@@ -568,10 +555,10 @@
 
         <div
             id="productList"
-            class="product-list"
+            class="admin-product-list"
         >
 
-            <div class="empty">
+            <div class="empty-products">
                 Loading products...
             </div>
 
@@ -588,6 +575,10 @@
 
 </main>
 
+
+<!-- =========================================
+     FOOTER
+========================================= -->
 
 <footer class="footer">
 
@@ -608,496 +599,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="js/admin.js"></script>
 
-<script>
-
-/* =====================================================
-   SUPABASE CONFIGURATION
-===================================================== */
-
-const SUPABASE_URL =
-    "https://hmvzqwatmsctlvzylmys.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_BJXkMjk7jvgYKXgiYMbvUw_6S17oAAY";
-
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =====================================================
-   SETTINGS
-===================================================== */
-
-/*
-   IMPORTANT:
-   এই নামটি তোমার Supabase Storage bucket-এর নামের
-   সাথে EXACTLY একই হতে হবে।
-*/
-
-const STORAGE_BUCKET =
-    "products";
-
-
-/* =====================================================
-   STATE
-===================================================== */
-
-let editingProductId = null;
-
-let oldImageUrl = null;
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const loginBox =
-    document.getElementById("loginBox");
-
-const dashboard =
-    document.getElementById("dashboard");
-
-const emailInput =
-    document.getElementById("email");
-
-const passwordInput =
-    document.getElementById("password");
-
-const loginBtn =
-    document.getElementById("loginBtn");
-
-const loginMessage =
-    document.getElementById("loginMessage");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-const productName =
-    document.getElementById("productName");
-
-const productPrice =
-    document.getElementById("productPrice");
-
-const productCategory =
-    document.getElementById("productCategory");
-
-const productImage =
-    document.getElementById("productImage");
-
-const productSizes =
-    document.getElementById("productSizes");
-
-const productColors =
-    document.getElementById("productColors");
-
-const productStock =
-    document.getElementById("productStock");
-
-const productDescription =
-    document.getElementById("productDescription");
-
-const saveProductBtn =
-    document.getElementById("saveProductBtn");
-
-const cancelEditBtn =
-    document.getElementById("cancelEditBtn");
-
-const productMessage =
-    document.getElementById("productMessage");
-
-const imagePreview =
-    document.getElementById("imagePreview");
-
-const previewImg =
-    document.getElementById("previewImg");
-
-const productList =
-    document.getElementById("productList");
-
-const refreshBtn =
-    document.getElementById("refreshBtn");
-
-const formTitle =
-    document.getElementById("formTitle");
-
-
-/* =====================================================
-   MESSAGE FUNCTIONS
-===================================================== */
-
-function showLoginMessage(message, type = "") {
-
-    loginMessage.textContent =
-        message;
-
-    loginMessage.className =
-        "message " + type;
-
-}
-
-
-function showProductMessage(message, type = "") {
-
-    productMessage.textContent =
-        message;
-
-    productMessage.className =
-        "message " + type;
-
-}
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-loginBtn.addEventListener(
-    "click",
-    login
-);
-
-
-passwordInput.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (event.key === "Enter") {
-
-            login();
-
-        }
-
-    }
-);
-
-
-async function login() {
-
-    const email =
-        emailInput.value.trim();
-
-    const password =
-        passwordInput.value;
-
-
-    if (!email) {
-
-        showLoginMessage(
-            "Please enter your email.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if (!password) {
-
-        showLoginMessage(
-            "Please enter your password.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    loginBtn.disabled = true;
-
-    loginBtn.textContent =
-        "Logging in...";
-
-
-    showLoginMessage(
-        "Connecting to Supabase..."
-    );
-
-
-    try {
-
-        const result =
-            await supabaseClient.auth
-                .signInWithPassword({
-
-                    email: email,
-
-                    password: password
-
-                });
-
-
-        if (result.error) {
-
-            console.error(
-                "Supabase Login Error:",
-                result.error
-            );
-
-
-            showLoginMessage(
-                result.error.message,
-                "error"
-            );
-
-            return;
-        }
-
-
-        if (!result.data ||
-            !result.data.user) {
-
-            showLoginMessage(
-                "Login failed. User session was not created.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        showLoginMessage(
-            "Login successful!",
-            "success"
-        );
-
-
-        showDashboard();
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Login Exception:",
-            error
-        );
-
-
-        showLoginMessage(
-            "Connection error: " +
-            error.message,
-            "error"
-        );
-
-    }
-
-    finally {
-
-        loginBtn.disabled = false;
-
-        loginBtn.textContent =
-            "Login";
-
-    }
-
-}
-
-
-/* =====================================================
-   SHOW DASHBOARD
-===================================================== */
-
-function showDashboard() {
-
-    loginBox.style.display =
-        "none";
-
-    dashboard.style.display =
-        "block";
-
-    loadProducts();
-
-}
-
-
-/* =====================================================
-   CHECK SESSION
-===================================================== */
-
-async function checkSession() {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient.auth
-                .getSession();
-
-
-        if (error) {
-
-            console.error(
-                "Session Error:",
-                error
-            );
-
-            return;
-        }
-
-
-        if (data.session) {
-
-            showDashboard();
-
-        }
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Session Check Error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   AUTH STATE CHANGE
-===================================================== */
-
-supabaseClient.auth.onAuthStateChange(
-    function(event, session) {
-
-        console.log(
-            "Auth event:",
-            event
-        );
-
-
-        if (session) {
-
-            loginBox.style.display =
-                "none";
-
-            dashboard.style.display =
-                "block";
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-logoutBtn.addEventListener(
-    "click",
-    async function() {
-
-        await supabaseClient.auth.signOut();
-
-        editingProductId = null;
-
-        oldImageUrl = null;
-
-        resetForm();
-
-        dashboard.style.display =
-            "none";
-
-        loginBox.style.display =
-            "block";
-
-        passwordInput.value = "";
-
-        showLoginMessage(
-            "Logged out successfully.",
-            "success"
-        );
-
-    }
-);
-
-
-/* =====================================================
-   IMAGE PREVIEW
-===================================================== */
-
-productImage.addEventListener(
-    "change",
-    function() {
-
-        const file =
-            this.files[0];
-
-
-        if (!file) {
-
-            imagePreview.style.display =
-                "none";
-
-            return;
-        }
-
-
-        if (!file.type.startsWith("image/")) {
-
-            showProductMessage(
-                "Please select an image file.",
-                "error"
-            );
-
-            this.value = "";
-
-            return;
-        }
-
-
-        if (file.size > 5 * 1024 * 1024) {
-
-            showProductMessage(
-                "Image must be smaller than 5 MB.",
-                "error"
-            );
-
-            this.value = "";
-
-            return;
-        }
-
-
-        const imageURL =
-            URL.createObjectURL(file);
-
-
-        previewImg.src =
-            imageURL;
-
-
-        imagePreview.style.display =
-            "block";
-
-
-        showProductMessage("");
-
-    }
-);
-
-
-/* =====================================================
-   SAVE PRODUCT
-===================================================== */
-
-saveProductBtn.addEventListener(
-    "click",
-    saveProduct
-);
-
-
-async function saveProduct() {
-
-    const name =
-        productName.
+</body>
+</html>
